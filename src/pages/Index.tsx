@@ -5,7 +5,7 @@ import { PositionsTable } from "@/components/PositionsTable";
 import { AIStrategyEngine } from "@/components/AIStrategyEngine";
 import { LiveTrading } from "@/components/LiveTrading";
 import { AIAnalysisChat } from "@/components/AIAnalysisChat";
-import { MarketOverviewDashboard } from "@/components/MarketOverviewDashboard";
+import { MarketStatsHero } from "@/components/MarketStatsHero";
 import { useMarketTicker, useOrderBook } from "@/hooks/useMarketData";
 import { useEffect, useState } from "react";
 
@@ -71,9 +71,10 @@ const Index = () => {
           </p>
         </div>
 
-        {/* Market Overview Dashboard - First */}
+        {/* Market Stats Hero */}
         <section>
-          <MarketOverviewDashboard />
+          <h2 className="text-2xl font-bold text-foreground mb-4">Market Intelligence</h2>
+          <MarketStatsHero markets={markets} isLoading={tickerLoading} />
         </section>
 
         {/* Two Column Layout - Trading + AI */}
