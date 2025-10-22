@@ -5,6 +5,7 @@ import { PositionsTable } from "@/components/PositionsTable";
 import { AIStrategyEngine } from "@/components/AIStrategyEngine";
 import { LiveTrading } from "@/components/LiveTrading";
 import { AIAnalysisChat } from "@/components/AIAnalysisChat";
+import { MarketOverviewDashboard } from "@/components/MarketOverviewDashboard";
 import { useMarketTicker, useOrderBook } from "@/hooks/useMarketData";
 import { useEffect, useState } from "react";
 
@@ -135,6 +136,11 @@ const Index = () => {
         {/* Active Positions - Full Width */}
         <section className="bg-card/30 rounded-lg p-1 border border-border/50">
           <PositionsTable />
+        </section>
+
+        {/* Market Overview Dashboard with CoinGlass Data */}
+        <section className="mt-8">
+          <MarketOverviewDashboard />
         </section>
       </main>
     </div>
