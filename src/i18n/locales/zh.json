@@ -13,6 +13,28 @@
     "gainers": "涨幅榜",
     "losers": "跌幅榜"
   },
+  "marketOverview": {
+    "title": "市场概览",
+    "subtitle": "比特币期货市场分析",
+    "openInterest": "持仓量",
+    "fundingRate": "平均资金费率",
+    "longShortRatio": "多空比",
+    "long": "多头",
+    "liquidations": "24小时清算",
+    "fearGreed": "恐惧贪婪指数",
+    "rsi": "RSI（24小时）",
+    "activeBuyRatio": "主动买入比率",
+    "optionsOI": "期权持仓量"
+  },
+  "aiAnalysis": {
+    "title": "AI市场分析",
+    "description": "AI驱动的洞察和市场情报",
+    "getAnalysis": "获取分析",
+    "selectToken": "选择代币并点击获取分析",
+    "askAnything": "或向我询问任何有关加密市场的问题",
+    "askPlaceholder": "询问市场趋势...",
+    "footer": "AI驱动 • 实时市场数据"
+  },
   "daisySignals": {
     "title": "Daisy信号与理由",
     "balance": "余额",

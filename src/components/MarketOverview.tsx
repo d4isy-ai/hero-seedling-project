@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TrendingUp, TrendingDown, DollarSign, Scale, AlertTriangle, Activity, BarChart3, Package } from "lucide-react";
 import { useCoinGlassData } from "@/hooks/useCoinGlassData";
+import { useTranslation } from "react-i18next";
 
 interface MetricCardProps {
   title: string;
@@ -42,6 +43,7 @@ const MetricCard = ({ title, value, subtitle, change, icon, isPositive, isLoadin
 };
 
 export const MarketOverview = () => {
+  const { t } = useTranslation();
   const symbol = 'BTC';
   
   const { data: openInterest, isLoading: loadingOI } = useCoinGlassData(symbol, 'openInterest');
@@ -87,13 +89,13 @@ export const MarketOverview = () => {
   return (
     <section className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-foreground">Market Overview</h2>
-        <span className="text-sm text-muted-foreground">Bitcoin Futures Market Analysis</span>
+        <h2 className="text-xl font-bold text-foreground">{t('marketOverview.title')}</h2>
+        <span className="text-sm text-muted-foreground">{t('marketOverview.subtitle')}</span>
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
-          title="Open Interest"
+          title={t('marketOverview.openInterest')}
           value={formatCurrency(oiValue)}
           change={formatPercentage(oiChange)}
           isPositive={oiChange >= 0}
@@ -102,29 +104,29 @@ export const MarketOverview = () => {
         />
         
         <MetricCard
-          title="Avg Funding Rate"
+          title={t('marketOverview.fundingRate')}
           value={formatPercentage(frValue)}
           icon={<DollarSign className="w-4 h-4" />}
           isLoading={loadingFR}
         />
         
         <MetricCard
-          title="Long/Short Ratio"
+          title={t('marketOverview.longShortRatio')}
           value={lsRatio.toFixed(2)}
-          subtitle={`${longPercent.toFixed(1)}% Long`}
+          subtitle={`${longPercent.toFixed(1)}% ${t('marketOverview.long')}`}
           icon={<Scale className="w-4 h-4" />}
           isLoading={loadingLS}
         />
         
         <MetricCard
-          title="24h Liquidations"
+          title={t('marketOverview.liquidations')}
           value={formatCurrency(liqValue)}
           icon={<AlertTriangle className="w-4 h-4" />}
           isLoading={loadingLiq}
         />
         
         <MetricCard
-          title="Fear & Greed Index"
+          title={t('marketOverview.fearGreed')}
           value={fgValue.toString()}
           subtitle={fgLabel}
           icon={<Activity className="w-4 h-4" />}
@@ -132,7 +134,7 @@ export const MarketOverview = () => {
         />
         
         <MetricCard
-          title="RSI (24h)"
+          title={t('marketOverview.rsi')}
           value={rsiValue.toFixed(1)}
           subtitle={rsiLabel}
           icon={<BarChart3 className="w-4 h-4" />}
@@ -140,14 +142,14 @@ export const MarketOverview = () => {
         />
         
         <MetricCard
-          title="Active Buy Ratio"
+          title={t('marketOverview.activeBuyRatio')}
           value={`${buyRatio.toFixed(1)}%`}
           icon={<TrendingDown className="w-4 h-4" />}
           isLoading={loadingAB}
         />
         
         <MetricCard
-          title="Options Open Interest"
+          title={t('marketOverview.optionsOI')}
           value={formatCurrency(optValue)}
           icon={<Package className="w-4 h-4" />}
           isLoading={loadingOpt}

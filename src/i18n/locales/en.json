@@ -13,6 +13,28 @@
     "gainers": "Top Gainers",
     "losers": "Top Losers"
   },
+  "marketOverview": {
+    "title": "Market Overview",
+    "subtitle": "Bitcoin Futures Market Analysis",
+    "openInterest": "Open Interest",
+    "fundingRate": "Avg Funding Rate",
+    "longShortRatio": "Long/Short Ratio",
+    "long": "Long",
+    "liquidations": "24h Liquidations",
+    "fearGreed": "Fear & Greed Index",
+    "rsi": "RSI (24h)",
+    "activeBuyRatio": "Active Buy Ratio",
+    "optionsOI": "Options Open Interest"
+  },
+  "aiAnalysis": {
+    "title": "AI Market Analysis",
+    "description": "AI-powered insights and market intelligence",
+    "getAnalysis": "Get Analysis",
+    "selectToken": "Select a token and click \"Get Analysis\"",
+    "askAnything": "Or ask me anything about crypto markets",
+    "askPlaceholder": "Ask about market trends...",
+    "footer": "AI-powered • Real-time market data"
+  },
   "daisySignals": {
     "title": "Daisy Signals & Rationale",
     "balance": "Balance",

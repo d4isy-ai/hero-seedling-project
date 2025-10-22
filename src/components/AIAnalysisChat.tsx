@@ -6,6 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Send, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 
 interface Message {
   role: 'user' | 'assistant';
@@ -15,6 +16,7 @@ interface Message {
 const TRADING_SYMBOLS = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT'];
 
 export const AIAnalysisChat = () => {
+  const { t } = useTranslation();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -148,10 +150,10 @@ export const AIAnalysisChat = () => {
       <CardHeader className="pb-3">
         <div className="flex items-center gap-2">
           <Sparkles className="h-5 w-5 text-primary" />
-          <CardTitle className="text-base sm:text-lg">AI Market Analysis</CardTitle>
+          <CardTitle className="text-base sm:text-lg">{t('aiAnalysis.title')}</CardTitle>
         </div>
         <CardDescription className="text-xs sm:text-sm">
-          AI-powered insights and market intelligence
+          {t('aiAnalysis.description')}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col gap-3 p-3 sm:p-4 min-h-0">
@@ -174,7 +176,7 @@ export const AIAnalysisChat = () => {
             className="whitespace-nowrap w-full sm:w-auto"
             size="sm"
           >
-            Get Analysis
+            {t('aiAnalysis.getAnalysis')}
           </Button>
         </div>
 
@@ -183,8 +185,8 @@ export const AIAnalysisChat = () => {
             {messages.length === 0 ? (
               <div className="text-center text-muted-foreground py-6 sm:py-8">
                 <Sparkles className="h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-3 sm:mb-4 opacity-50" />
-                <p className="text-xs sm:text-sm">Select a token and click "Get Analysis"</p>
-                <p className="text-xs mt-2">Or ask me anything about crypto markets</p>
+                <p className="text-xs sm:text-sm">{t('aiAnalysis.selectToken')}</p>
+                <p className="text-xs mt-2">{t('aiAnalysis.askAnything')}</p>
               </div>
             ) : (
               messages.map((msg, idx) => (
@@ -223,7 +225,7 @@ export const AIAnalysisChat = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Ask about market trends..."
+            placeholder={t('aiAnalysis.askPlaceholder')}
             disabled={isLoading}
             className="text-xs sm:text-sm flex-1"
           />
@@ -238,7 +240,7 @@ export const AIAnalysisChat = () => {
         </div>
 
         <p className="text-[10px] sm:text-xs text-muted-foreground text-center">
-          AI-powered • Real-time market data
+          {t('aiAnalysis.footer')}
         </p>
       </CardContent>
     </Card>
