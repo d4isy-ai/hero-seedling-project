@@ -21,7 +21,7 @@ interface PortfolioPoint {
   balance: number;
 }
 
-const INITIAL_CAPITAL = 1378;
+const INITIAL_CAPITAL = 1000;
 const TRADING_SYMBOLS = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT'];
 const MIN_OPEN_TRADES = 3;
 
