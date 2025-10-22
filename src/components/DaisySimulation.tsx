@@ -113,21 +113,60 @@ export const DaisySimulation = () => {
     if (score >= 0.3) label = "Bullish";
     else if (score <= -0.3) label = "Bearish";
 
-    // Generate rationale
+    // Generate detailed trader-friendly rationale
     let rationale = "";
-    if (Math.abs(oiChange) > 2) {
-      rationale += `ΔOI ${oiChange > 0 ? '+' : ''}${oiChange.toFixed(1)}%; `;
+    const parts: string[] = [];
+    
+    // Open Interest analysis
+    if (oiChange > 3) {
+      parts.push(`🔥 Strong capital inflow: Open Interest surged ${oiChange.toFixed(1)}% indicating fresh positioning and conviction`);
+    } else if (oiChange > 1) {
+      parts.push(`📈 Moderate OI increase (+${oiChange.toFixed(1)}%) shows growing market participation`);
+    } else if (oiChange < -3) {
+      parts.push(`⚠️ Heavy position unwinding: OI dropped ${oiChange.toFixed(1)}% suggesting traders are exiting`);
+    } else if (oiChange < -1) {
+      parts.push(`📉 Declining OI (${oiChange.toFixed(1)}%) indicates reduced market interest`);
     }
-    if (Math.abs(funding) > 0.03) {
-      rationale += `Funding ${funding > 0 ? 'elevated' : 'negative'}; `;
+
+    // Funding rate analysis
+    if (funding > 0.05) {
+      parts.push(`🔴 Extremely high funding rate (${(funding * 100).toFixed(3)}%) - longs paying heavily, potential mean reversion setup`);
+    } else if (funding > 0.03) {
+      parts.push(`🟡 Elevated funding (${(funding * 100).toFixed(3)}%) - market may be overheated on long side`);
+    } else if (funding < -0.05) {
+      parts.push(`🟢 Deeply negative funding (${(funding * 100).toFixed(3)}%) - shorts paying premium, bullish contrarian signal`);
+    } else if (funding < -0.03) {
+      parts.push(`🟢 Negative funding (${(funding * 100).toFixed(3)}%) - short squeeze potential building`);
+    } else if (Math.abs(funding) < 0.01) {
+      parts.push(`⚪ Balanced funding (${(funding * 100).toFixed(3)}%) - neutral sentiment, no funding pressure`);
     }
-    if (lsRatio > 1.5) {
-      rationale += "L/S ratio high (contrarian short); ";
-    } else if (lsRatio < 0.7) {
-      rationale += "L/S ratio low (contrarian long); ";
+
+    // Long/Short ratio analysis
+    if (lsRatio > 1.8) {
+      parts.push(`⚡ Crowded long (L/S: ${lsRatio.toFixed(2)}) - contrarian short opportunity, potential liquidation cascade risk`);
+    } else if (lsRatio > 1.3) {
+      parts.push(`📊 Long-biased market (L/S: ${lsRatio.toFixed(2)}) - watch for reversal signals`);
+    } else if (lsRatio < 0.6) {
+      parts.push(`⚡ Extreme short positioning (L/S: ${lsRatio.toFixed(2)}) - contrarian long setup, squeeze potential`);
+    } else if (lsRatio < 0.8) {
+      parts.push(`📊 Short-biased (L/S: ${lsRatio.toFixed(2)}) - bullish contrarian lean`);
+    } else {
+      parts.push(`⚖️ Balanced positioning (L/S: ${lsRatio.toFixed(2)}) - no clear directional bias`);
     }
-    if (!rationale) rationale = "Neutral conditions; ";
-    rationale += `Score: ${score.toFixed(2)}`;
+
+    // Liquidation context
+    if (liquidation > 1000000000) {
+      parts.push(`💥 High liquidation volume ($${(liquidation / 1000000).toFixed(0)}M) - elevated volatility expected`);
+    }
+
+    // Combine all parts
+    if (parts.length > 0) {
+      rationale = parts.join(". ") + ".";
+    } else {
+      rationale = "Market showing neutral conditions with no extreme signals. Waiting for clearer directional setup.";
+    }
+    
+    rationale += ` [Signal Score: ${score.toFixed(2)}]`;
 
     return { symbol, score, label, funding, oiChange, longShortRatio: lsRatio, liquidation, rationale };
   };
