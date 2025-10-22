@@ -6,6 +6,7 @@ import { AIStrategyEngine } from "@/components/AIStrategyEngine";
 import { LiveTrading } from "@/components/LiveTrading";
 import { AIAnalysisChat } from "@/components/AIAnalysisChat";
 import { MarketStatsHero } from "@/components/MarketStatsHero";
+import { MarketOverview } from "@/components/MarketOverview";
 import { useMarketTicker, useOrderBook } from "@/hooks/useMarketData";
 import { useEffect, useState } from "react";
 
@@ -116,6 +117,9 @@ const Index = () => {
             )}
           </div>
         </section>
+
+        {/* Market Overview Section */}
+        <MarketOverview />
 
 
         {/* Active Positions - Full Width */}
