@@ -8,26 +8,26 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 240 10% 8%;
-    --foreground: 240 5% 96%;
+    --background: 0 0% 6%;
+    --foreground: 36 45% 85%;
 
-    --card: 240 8% 12%;
-    --card-foreground: 240 5% 96%;
+    --card: 0 0% 10%;
+    --card-foreground: 36 45% 85%;
 
-    --popover: 240 8% 10%;
-    --popover-foreground: 240 5% 96%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 36 45% 85%;
 
-    --primary: 270 80% 65%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 36 55% 75%;
+    --primary-foreground: 0 0% 10%;
 
-    --secondary: 240 6% 18%;
-    --secondary-foreground: 240 5% 96%;
+    --secondary: 30 25% 20%;
+    --secondary-foreground: 36 45% 85%;
 
-    --muted: 240 6% 15%;
-    --muted-foreground: 240 5% 64%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 36 25% 60%;
 
-    --accent: 280 85% 70%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 40 60% 70%;
+    --accent-foreground: 0 0% 10%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
@@ -35,15 +35,15 @@ All colors MUST be HSL.
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
 
-    --border: 240 6% 20%;
-    --input: 240 6% 18%;
-    --ring: 270 80% 65%;
+    --border: 30 15% 25%;
+    --input: 30 15% 18%;
+    --ring: 36 55% 75%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    --gradient-cosmic: linear-gradient(135deg, hsl(270 80% 65%), hsl(280 85% 70%));
-    --gradient-stellar: linear-gradient(180deg, hsl(240 10% 8%), hsl(240 8% 12%));
-    --glow-primary: 0 0 20px hsl(270 80% 65% / 0.3);
+    --gradient-daisy: linear-gradient(135deg, hsl(36 55% 75%), hsl(40 60% 70%));
+    --gradient-warm: linear-gradient(180deg, hsl(0 0% 6%), hsl(30 25% 12%));
+    --glow-primary: 0 0 25px hsl(36 55% 75% / 0.4);
     --glow-success: 0 0 15px hsl(142 76% 36% / 0.3);
     --glow-destructive: 0 0 15px hsl(0 72% 51% / 0.3);
   }

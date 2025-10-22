@@ -53,8 +53,8 @@ export default {
         },
       },
       backgroundImage: {
-        'gradient-cosmic': 'var(--gradient-cosmic)',
-        'gradient-stellar': 'var(--gradient-stellar)',
+        'gradient-daisy': 'var(--gradient-daisy)',
+        'gradient-warm': 'var(--gradient-warm)',
       },
       boxShadow: {
         'glow-primary': 'var(--glow-primary)',

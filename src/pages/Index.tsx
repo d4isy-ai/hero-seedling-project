@@ -55,14 +55,40 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-stellar">
+    <div className="min-h-screen bg-gradient-warm">
       <Header />
       
-      <main className="container mx-auto px-4 py-6 space-y-6">
-        {/* Live Market Overview */}
+      <main className="container mx-auto px-4 py-6 space-y-8">
+        {/* Hero Section with Gradient */}
+        <div className="bg-gradient-daisy rounded-xl p-6 text-center shadow-glow-primary">
+          <h2 className="text-3xl font-bold text-primary-foreground mb-2">
+            Autonomous Trading, Simplified
+          </h2>
+          <p className="text-primary-foreground/80">
+            AI-powered market intelligence meets effortless execution
+          </p>
+        </div>
+
+        {/* Two Column Layout - Trading + AI */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Left Column - Daisy Live Trading */}
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+              <span className="text-2xl">🌼</span> Daisy Live Trading
+            </h2>
+            <LiveTrading />
+          </section>
+
+          {/* Right Column - AI Strategy Engine */}
+          <section>
+            <AIStrategyEngine />
+          </section>
+        </div>
+
+        {/* Live Market Overview - Horizontal Scroll on Mobile */}
         <section>
-          <h2 className="text-xl font-bold text-foreground mb-4">Live Market Overview</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <h2 className="text-xl font-bold text-foreground mb-4">Market Pulse</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {tickerLoading ? (
               selectedSymbols.map((symbol) => (
                 <MarketCard 
@@ -83,16 +109,10 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Live Trading */}
+        {/* Order Books - Compact Grid */}
         <section>
-          <h2 className="text-xl font-bold text-foreground mb-4">Live Trading</h2>
-          <LiveTrading />
-        </section>
-
-        {/* Order Books */}
-        <section>
-          <h2 className="text-xl font-bold text-foreground mb-4">Order Books</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <h2 className="text-xl font-bold text-foreground mb-4">Order Flow</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <OrderBook 
               symbol="ASTERUSDT" 
               {...formatOrderBookData(orderBookASTER)}
@@ -111,14 +131,9 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Active Positions */}
-        <section>
+        {/* Active Positions - Full Width */}
+        <section className="bg-card/30 rounded-lg p-1 border border-border/50">
           <PositionsTable />
-        </section>
-
-        {/* AI Strategy Engine */}
-        <section>
-          <AIStrategyEngine />
         </section>
       </main>
     </div>
