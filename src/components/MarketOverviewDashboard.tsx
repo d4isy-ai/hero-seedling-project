@@ -11,14 +11,24 @@ const SYMBOLS = ['BTC', 'ETH', 'BNB', 'SOL'];
 export const MarketOverviewDashboard = () => {
   const [selectedSymbol, setSelectedSymbol] = useState('BTC');
 
-  const { data: openInterest, isLoading: loadingOI } = useCoinGlassData(selectedSymbol, 'openInterest');
-  const { data: fundingRate, isLoading: loadingFR } = useCoinGlassData(selectedSymbol, 'fundingRate');
-  const { data: longShortRatio, isLoading: loadingLSR } = useCoinGlassData(selectedSymbol, 'longShortRatio');
-  const { data: liquidation, isLoading: loadingLiq } = useCoinGlassData(selectedSymbol, 'liquidation');
-  const { data: fearGreed, isLoading: loadingFG } = useCoinGlassData(selectedSymbol, 'fearGreed');
-  const { data: rsi, isLoading: loadingRSI } = useCoinGlassData(selectedSymbol, 'rsi');
-  const { data: activeBuy, isLoading: loadingAB } = useCoinGlassData(selectedSymbol, 'activeBuy');
-  const { data: optionsOI, isLoading: loadingOpt } = useCoinGlassData(selectedSymbol, 'optionsOI');
+  const { data: openInterest, isLoading: loadingOI, error: errorOI } = useCoinGlassData(selectedSymbol, 'openInterest');
+  const { data: fundingRate, isLoading: loadingFR, error: errorFR } = useCoinGlassData(selectedSymbol, 'fundingRate');
+  const { data: longShortRatio, isLoading: loadingLSR, error: errorLSR } = useCoinGlassData(selectedSymbol, 'longShortRatio');
+  const { data: liquidation, isLoading: loadingLiq, error: errorLiq } = useCoinGlassData(selectedSymbol, 'liquidation');
+  const { data: fearGreed, isLoading: loadingFG, error: errorFG } = useCoinGlassData(selectedSymbol, 'fearGreed');
+  const { data: rsi, isLoading: loadingRSI, error: errorRSI } = useCoinGlassData(selectedSymbol, 'rsi');
+  const { data: activeBuy, isLoading: loadingAB, error: errorAB } = useCoinGlassData(selectedSymbol, 'activeBuy');
+  const { data: optionsOI, isLoading: loadingOpt, error: errorOpt } = useCoinGlassData(selectedSymbol, 'optionsOI');
+
+  // Log errors for debugging
+  if (errorOI) console.error('Open Interest error:', errorOI);
+  if (errorFR) console.error('Funding Rate error:', errorFR);
+  if (errorLSR) console.error('Long/Short Ratio error:', errorLSR);
+  if (errorLiq) console.error('Liquidation error:', errorLiq);
+  if (errorFG) console.error('Fear & Greed error:', errorFG);
+  if (errorRSI) console.error('RSI error:', errorRSI);
+  if (errorAB) console.error('Active Buy error:', errorAB);
+  if (errorOpt) console.error('Options OI error:', errorOpt);
 
   const MetricCard = ({ 
     title, 
@@ -26,7 +36,8 @@ export const MarketOverviewDashboard = () => {
     change, 
     icon: Icon, 
     loading,
-    sentiment 
+    sentiment,
+    error 
   }: { 
     title: string; 
     value: string; 
@@ -34,6 +45,7 @@ export const MarketOverviewDashboard = () => {
     icon: any; 
     loading: boolean;
     sentiment?: 'positive' | 'negative' | 'neutral';
+    error?: any;
   }) => (
     <Card>
       <CardHeader className="pb-2">
@@ -45,6 +57,8 @@ export const MarketOverviewDashboard = () => {
       <CardContent>
         {loading ? (
           <Skeleton className="h-8 w-24" />
+        ) : error ? (
+          <div className="text-sm text-destructive">Error loading data</div>
         ) : (
           <>
             <div className="text-2xl font-bold">{value}</div>
@@ -105,6 +119,7 @@ export const MarketOverviewDashboard = () => {
           icon={TrendingUp}
           loading={loadingOI}
           sentiment={parseFloat(oiChange) > 0 ? 'positive' : 'negative'}
+          error={errorOI}
         />
         <MetricCard
           title="Avg Funding Rate"
@@ -112,6 +127,7 @@ export const MarketOverviewDashboard = () => {
           icon={DollarSign}
           loading={loadingFR}
           sentiment={parseFloat(frValue) < 0 ? 'positive' : 'negative'}
+          error={errorFR}
         />
         <MetricCard
           title="Long/Short Ratio"
@@ -119,6 +135,7 @@ export const MarketOverviewDashboard = () => {
           change={lsrLong + ' Long'}
           icon={Scale}
           loading={loadingLSR}
+          error={errorLSR}
         />
         <MetricCard
           title="24h Liquidations"
@@ -126,6 +143,7 @@ export const MarketOverviewDashboard = () => {
           icon={AlertTriangle}
           loading={loadingLiq}
           sentiment="negative"
+          error={errorLiq}
         />
         <MetricCard
           title="Fear & Greed"
@@ -133,6 +151,7 @@ export const MarketOverviewDashboard = () => {
           change={fgLabel}
           icon={Activity}
           loading={loadingFG}
+          error={errorFG}
         />
         <MetricCard
           title="RSI (24h)"
@@ -140,18 +159,21 @@ export const MarketOverviewDashboard = () => {
           change={rsiLabel}
           icon={Target}
           loading={loadingRSI}
+          error={errorRSI}
         />
         <MetricCard
           title="Active Buy Ratio"
           value={abValue}
           icon={BarChart3}
           loading={loadingAB}
+          error={errorAB}
         />
         <MetricCard
           title="Options OI"
           value={optValue}
           icon={PieChart}
           loading={loadingOpt}
+          error={errorOpt}
         />
       </div>
 

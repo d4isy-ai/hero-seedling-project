@@ -53,7 +53,13 @@ serve(async (req) => {
     }
 
     const data = await response.json();
-    console.log('CoinGlass data received:', data);
+    console.log('CoinGlass data received:', JSON.stringify(data, null, 2));
+
+    // Check if the response has a success indicator
+    if (data.success === false || data.code !== 0) {
+      console.error('CoinGlass API returned error:', data);
+      throw new Error(data.msg || 'CoinGlass API returned an error');
+    }
 
     return new Response(JSON.stringify(data), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
