@@ -31,7 +31,7 @@
     "title": "AI Market Analysis",
     "description": "AI-powered insights and market intelligence",
     "getAnalysis": "Get Analysis",
-    "selectToken": "Select a token and click \"Get Analysis\"",
+    "selectToken": "Ask me to analyze any token available on Aster",
     "askAnything": "Or ask me anything about crypto markets",
     "askPlaceholder": "Ask about market trends...",
     "footer": "AI-powered • Real-time market data"

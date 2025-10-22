@@ -31,7 +31,7 @@
     "title": "AI市场分析",
     "description": "AI驱动的洞察和市场情报",
     "getAnalysis": "获取分析",
-    "selectToken": "选择代币并点击获取分析",
+    "selectToken": "请让我分析Aster上可用的任何代币",
     "askAnything": "或向我询问任何有关加密市场的问题",
     "askPlaceholder": "询问市场趋势...",
     "footer": "AI驱动 • 实时市场数据"
