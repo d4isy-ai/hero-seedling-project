@@ -25,8 +25,10 @@ export const Header = () => {
               <img src={xLogo} alt="X" className="w-4 h-4" />
             </a>
           </Button>
-          <Button variant="ghost" size="icon">
-            <Github className="w-5 h-5" />
+          <Button variant="ghost" size="icon" asChild>
+            <a href="https://github.com/d4isy/" target="_blank" rel="noopener noreferrer">
+              <Github className="w-5 h-5" />
+            </a>
           </Button>
         </div>
       </div>
