@@ -79,21 +79,15 @@ const Index = () => {
           <MarketStatsHero markets={markets} isLoading={tickerLoading} />
         </section>
 
-        {/* Two Column Layout - Trading + AI */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left Column - Daisy Live Trading */}
-          <section className="space-y-4">
-            <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-              <span className="text-2xl">🌼</span> Daisy Live Trading
-            </h2>
-            <LiveTrading />
-          </section>
+        {/* Daisy Signals */}
+        <section>
+          <DaisySimulation />
+        </section>
 
-          {/* Right Column - AI Market Analysis - Full Height */}
-          <section className="h-full">
-            <AIAnalysisChat />
-          </section>
-        </div>
+        {/* AI Market Analysis - Full Width */}
+        <section>
+          <AIAnalysisChat />
+        </section>
 
         {/* Live Market Overview - Responsive Grid */}
         <section>
@@ -128,10 +122,6 @@ const Index = () => {
           <PositionsTable />
         </section>
 
-        {/* Daisy Signal-Driven Simulation */}
-        <section>
-          <DaisySimulation />
-        </section>
       </main>
     </div>
   );
