@@ -416,7 +416,7 @@ export const DaisySimulation = () => {
           <CardHeader>
             <CardTitle>Signals & Rationale</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 max-h-[400px] overflow-y-auto">
             {signals.length === 0 ? (
               <p className="text-muted-foreground text-sm">Loading signals...</p>
             ) : (
