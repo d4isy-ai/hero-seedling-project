@@ -79,6 +79,7 @@
     "total": "Total"
   },
   "charts": {
+    "title": "Key Indicator Charts",
     "priceHistory": "Price History",
     "openInterest": "Open Interest",
     "exchangeBuyRatio": "Active Buy Ratio by Exchange",
