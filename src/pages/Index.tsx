@@ -4,6 +4,7 @@ import { OrderBook } from "@/components/OrderBook";
 import { PositionsTable } from "@/components/PositionsTable";
 import { AIStrategyEngine } from "@/components/AIStrategyEngine";
 import { LiveTrading } from "@/components/LiveTrading";
+import { AIAnalysisChat } from "@/components/AIAnalysisChat";
 import { useMarketTicker, useOrderBook } from "@/hooks/useMarketData";
 import { useEffect, useState } from "react";
 
@@ -80,8 +81,8 @@ const Index = () => {
           </section>
 
           {/* Right Column - AI Strategy Engine */}
-          <section>
-            <AIStrategyEngine />
+          <section className="h-[600px]">
+            <AIAnalysisChat />
           </section>
         </div>
 
