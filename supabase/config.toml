@@ -1,1 +1,4 @@
 project_id = "uxhtwesiqmjumddmwbfi"
+
+[functions.update-live-trading]
+verify_jwt = false
