@@ -42,11 +42,11 @@ interface EquityPoint {
 const SYMBOLS = ["BTC", "ETH", "BNB", "SOL", "XRP", "ADA", "DOGE", "MATIC", "DOT", "LINK"];
 const STARTING_BALANCE = 1000;
 const MIN_TRADE_SIZE = 50;
-const MAX_TRADE_SIZE = 100;
-const MAX_POSITIONS = 3;
-const TP_PERCENT = 1.2;
-const SL_PERCENT = 0.8;
-const TIME_EXIT_MS = 6 * 60 * 1000; // 6 minutes
+const MAX_TRADE_SIZE = 150;
+const MAX_POSITIONS = 5;
+const TP_PERCENT = 3; // 3% take profit
+const SL_PERCENT = 2; // 2% stop loss
+const TIME_EXIT_MS = 4 * 60 * 1000; // 4 minutes
 
 export const DaisySimulation = () => {
   const [signals, setSignals] = useState<Signal[]>([]);
@@ -246,9 +246,20 @@ export const DaisySimulation = () => {
 
   // Get current price for symbol
   const getPrice = (symbol: string): number | null => {
-    if (!tickerData || !Array.isArray(tickerData)) return null;
-    const ticker = tickerData.find((t: any) => t.symbol === `${symbol}USDT`);
-    return ticker ? parseFloat(ticker.lastPrice) : null;
+    if (!tickerData) return null;
+    
+    // Handle both array and single object responses
+    const tickers = Array.isArray(tickerData) ? tickerData : [tickerData];
+    const ticker = tickers.find((t: any) => t.symbol === `${symbol}USDT` || t.symbol === symbol);
+    
+    if (ticker && ticker.lastPrice) {
+      const price = parseFloat(ticker.lastPrice);
+      console.log(`Price for ${symbol}: $${price}`);
+      return price;
+    }
+    
+    console.warn(`No price found for ${symbol}`);
+    return null;
   };
 
   // Update open trades PnL
@@ -313,7 +324,7 @@ export const DaisySimulation = () => {
           };
           newClosed.push(closedTrade);
           setRealizedPnL(prev => prev + trade.pnlUSD);
-          console.log('Trade closed:', closedTrade);
+          console.log(`❌ TRADE CLOSED: ${trade.direction} ${trade.symbol} | Entry: $${trade.entryPrice.toFixed(2)} | Exit: $${trade.lastPrice.toFixed(2)} | PnL: $${trade.pnlUSD.toFixed(2)} (${trade.pnlPercent.toFixed(2)}%) | Reason: ${exitReason}`);
         } else {
           stillOpen.push(trade);
         }
@@ -340,13 +351,14 @@ export const DaisySimulation = () => {
           let shouldEnter = false;
           let direction: "LONG" | "SHORT" | null = null;
 
-if (signal.score >= 0.3) {
-  shouldEnter = true;
-  direction = "LONG";
-} else if (signal.score <= -0.3) {
-  shouldEnter = true;
-  direction = "SHORT";
-}
+          // More aggressive entry - take any signal >= 0.2 or <= -0.2
+          if (signal.score >= 0.2) {
+            shouldEnter = true;
+            direction = "LONG";
+          } else if (signal.score <= -0.2) {
+            shouldEnter = true;
+            direction = "SHORT";
+          }
 
           if (shouldEnter && direction) {
             const sizeUSD = MIN_TRADE_SIZE + Math.random() * (MAX_TRADE_SIZE - MIN_TRADE_SIZE);
@@ -367,7 +379,7 @@ if (signal.score >= 0.3) {
             };
 
             stillOpen.push(newTrade);
-            console.log('Trade opened:', newTrade);
+            console.log(`✅ TRADE OPENED: ${direction} ${signal.symbol} @ $${price.toFixed(2)} | Size: $${sizeUSD.toFixed(2)} | Signal: ${signal.score.toFixed(2)}`);
           }
         }
       }
