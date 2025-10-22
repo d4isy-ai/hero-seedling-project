@@ -407,7 +407,7 @@ export const DaisySimulation = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold mb-2">Daisy Signals</h2>
+        <h2 className="text-2xl font-bold mb-2">D4ISY Signals</h2>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

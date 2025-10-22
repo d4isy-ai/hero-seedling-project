@@ -13,7 +13,7 @@ export const Header = () => {
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-full overflow-hidden shadow-glow-primary bg-background p-1">
-            <img src={daisyLogo} alt="Daisy Logo" className="w-full h-full object-contain" />
+            <img src={daisyLogo} alt="D4ISY Logo" className="w-full h-full object-contain" />
           </div>
           <div>
             <h1 className="text-2xl font-bold bg-gradient-daisy bg-clip-text text-transparent">

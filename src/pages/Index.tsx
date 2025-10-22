@@ -82,7 +82,7 @@ const Index = () => {
         {/* Market Overview Section */}
         <MarketOverview />
 
-        {/* Daisy Signals */}
+        {/* D4ISY Signals */}
         <section>
           <DaisySimulation />
         </section>
