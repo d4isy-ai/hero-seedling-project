@@ -60,7 +60,7 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-warm">
       <Header />
       
-      <main className="container mx-auto px-4 py-6 space-y-8">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-6 sm:space-y-8">
         {/* Hero Section with Gradient */}
         <div className="bg-gradient-daisy rounded-xl p-6 text-center shadow-glow-primary">
           <h2 className="text-3xl font-bold text-primary-foreground mb-2">
@@ -88,15 +88,15 @@ const Index = () => {
           </section>
 
           {/* Right Column - AI Market Analysis */}
-          <section className="h-[600px]">
+          <section className="h-[500px] sm:h-[600px]">
             <AIAnalysisChat />
           </section>
         </div>
 
-        {/* Live Market Overview - Horizontal Scroll on Mobile */}
+        {/* Live Market Overview - Responsive Grid */}
         <section>
           <h2 className="text-xl font-bold text-foreground mb-4">Market Pulse</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {tickerLoading ? (
               selectedSymbols.map((symbol) => (
                 <MarketCard 
@@ -117,10 +117,10 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Order Books - Compact Grid */}
+        {/* Order Books - Responsive Grid */}
         <section>
           <h2 className="text-xl font-bold text-foreground mb-4">Order Flow</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
             <OrderBook 
               symbol="ASTERUSDT" 
               {...formatOrderBookData(orderBookASTER)}

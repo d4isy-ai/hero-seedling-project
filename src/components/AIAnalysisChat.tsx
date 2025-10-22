@@ -144,20 +144,20 @@ export const AIAnalysisChat = () => {
   };
 
   return (
-    <Card className="h-full flex flex-col">
-      <CardHeader>
+    <Card className="h-full flex flex-col bg-card/50 backdrop-blur-sm">
+      <CardHeader className="pb-3">
         <div className="flex items-center gap-2">
           <Sparkles className="h-5 w-5 text-primary" />
-          <CardTitle>AI Market Analysis</CardTitle>
+          <CardTitle className="text-base sm:text-lg">AI Market Analysis</CardTitle>
         </div>
-        <CardDescription>
+        <CardDescription className="text-xs sm:text-sm">
           AI-powered insights and market intelligence
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col gap-4 p-4">
-        <div className="flex gap-2">
+      <CardContent className="flex-1 flex flex-col gap-3 p-3 sm:p-4 min-h-0">
+        <div className="flex gap-2 flex-col sm:flex-row">
           <Select value={selectedSymbol} onValueChange={setSelectedSymbol}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full sm:flex-1">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -171,19 +171,20 @@ export const AIAnalysisChat = () => {
           <Button 
             onClick={() => getAnalysis()} 
             disabled={isLoading}
-            className="whitespace-nowrap"
+            className="whitespace-nowrap w-full sm:w-auto"
+            size="sm"
           >
             Get Analysis
           </Button>
         </div>
 
-        <ScrollArea className="flex-1 pr-4" ref={scrollRef}>
-          <div className="space-y-4">
+        <ScrollArea className="flex-1 min-h-0 pr-2 sm:pr-4" ref={scrollRef}>
+          <div className="space-y-3 pb-2">
             {messages.length === 0 ? (
-              <div className="text-center text-muted-foreground py-8">
-                <Sparkles className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>Select a token and click "Get Analysis"</p>
-                <p className="text-sm mt-2">Or ask me anything about crypto markets</p>
+              <div className="text-center text-muted-foreground py-6 sm:py-8">
+                <Sparkles className="h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-3 sm:mb-4 opacity-50" />
+                <p className="text-xs sm:text-sm">Select a token and click "Get Analysis"</p>
+                <p className="text-xs mt-2">Or ask me anything about crypto markets</p>
               </div>
             ) : (
               messages.map((msg, idx) => (
@@ -192,20 +193,20 @@ export const AIAnalysisChat = () => {
                   className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[80%] rounded-lg p-3 ${
+                    className={`max-w-[85%] sm:max-w-[80%] rounded-lg p-2.5 sm:p-3 ${
                       msg.role === 'user'
                         ? 'bg-primary text-primary-foreground'
                         : 'bg-muted'
                     }`}
                   >
-                    <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                    <p className="text-xs sm:text-sm whitespace-pre-wrap break-words">{msg.content}</p>
                   </div>
                 </div>
               ))
             )}
             {isLoading && messages[messages.length - 1]?.role === 'user' && (
               <div className="flex justify-start">
-                <div className="bg-muted rounded-lg p-3">
+                <div className="bg-muted rounded-lg p-2.5 sm:p-3">
                   <div className="flex gap-1">
                     <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
                     <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-100" />
@@ -217,20 +218,26 @@ export const AIAnalysisChat = () => {
           </div>
         </ScrollArea>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-col sm:flex-row mt-auto">
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Ask about market trends, strategies, or analysis..."
+            placeholder="Ask about market trends..."
             disabled={isLoading}
+            className="text-xs sm:text-sm flex-1"
           />
-          <Button onClick={handleSend} disabled={isLoading || !input.trim()}>
-            <Send className="h-4 w-4" />
+          <Button 
+            onClick={handleSend} 
+            disabled={isLoading || !input.trim()}
+            size="sm"
+            className="w-full sm:w-auto"
+          >
+            <Send className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </Button>
         </div>
 
-        <p className="text-xs text-muted-foreground text-center">
+        <p className="text-[10px] sm:text-xs text-muted-foreground text-center">
           AI-powered • Real-time market data
         </p>
       </CardContent>
