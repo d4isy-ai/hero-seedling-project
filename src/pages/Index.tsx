@@ -110,6 +110,9 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Market Overview Section */}
+        <MarketOverview />
+
         {/* Market Intelligence Section */}
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-4">{t('marketIntelligence.title')}</h2>
