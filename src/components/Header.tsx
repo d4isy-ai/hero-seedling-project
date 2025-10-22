@@ -1,6 +1,7 @@
-import { Github, Twitter } from "lucide-react";
+import { Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import stardustLogo from "@/assets/stardust-logo.jpg";
+import xLogo from "@/assets/x-logo.png";
 
 export const Header = () => {
   return (
@@ -35,7 +36,7 @@ export const Header = () => {
           </div>
           <Button variant="ghost" size="icon" asChild>
             <a href="https://x.com/d4isy_ai" target="_blank" rel="noopener noreferrer">
-              <Twitter className="w-5 h-5" />
+              <img src={xLogo} alt="X" className="w-4 h-4" />
             </a>
           </Button>
           <Button variant="ghost" size="icon">
