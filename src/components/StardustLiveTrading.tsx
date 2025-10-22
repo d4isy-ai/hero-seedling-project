@@ -218,7 +218,7 @@ export const LiveTrading = () => {
             <LineChart data={portfolioHistory}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" />
-              <YAxis domain={[1200, 'auto']} />
+              <YAxis domain={[900, 'auto']} />
               <Tooltip />
               <Line 
                 type="monotone" 
