@@ -1,8 +1,32 @@
 import { Card } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useCoinGlassData } from "@/hooks/useCoinGlassData";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from "recharts";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+
+const COINGLASS_COINS = [
+  { symbol: 'BTC', name: 'Bitcoin' },
+  { symbol: 'ETH', name: 'Ethereum' },
+  { symbol: 'BNB', name: 'BNB' },
+  { symbol: 'SOL', name: 'Solana' },
+  { symbol: 'XRP', name: 'Ripple' },
+  { symbol: 'ADA', name: 'Cardano' },
+  { symbol: 'DOGE', name: 'Dogecoin' },
+  { symbol: 'MATIC', name: 'Polygon' },
+  { symbol: 'DOT', name: 'Polkadot' },
+  { symbol: 'LTC', name: 'Litecoin' },
+  { symbol: 'AVAX', name: 'Avalanche' },
+  { symbol: 'LINK', name: 'Chainlink' },
+  { symbol: 'UNI', name: 'Uniswap' },
+  { symbol: 'ATOM', name: 'Cosmos' },
+  { symbol: 'ETC', name: 'Ethereum Classic' },
+  { symbol: 'XLM', name: 'Stellar' },
+  { symbol: 'FIL', name: 'Filecoin' },
+  { symbol: 'TRX', name: 'Tron' },
+  { symbol: 'NEAR', name: 'NEAR Protocol' },
+  { symbol: 'ICP', name: 'Internet Computer' },
+];
 
 export const MarketCharts = () => {
   const { t } = useTranslation();
@@ -76,25 +100,23 @@ export const MarketCharts = () => {
     };
   });
 
-  const symbols = ['BTC', 'ETH', 'BNB', 'SOL', 'XRP'];
-
   return (
     <div className="space-y-6">
       {/* Symbol Selector */}
-      <div className="flex gap-2 flex-wrap">
-        {symbols.map((symbol) => (
-          <button
-            key={symbol}
-            onClick={() => setSelectedSymbol(symbol)}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
-              selectedSymbol === symbol
-                ? 'bg-primary text-primary-foreground shadow-glow-primary'
-                : 'bg-card hover:bg-card/80 text-muted-foreground'
-            }`}
-          >
-            {symbol}
-          </button>
-        ))}
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <h2 className="text-xl font-bold text-foreground">{t('charts.title')}</h2>
+        <Select value={selectedSymbol} onValueChange={setSelectedSymbol}>
+          <SelectTrigger className="w-[180px] bg-card">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="bg-card z-50">
+            {COINGLASS_COINS.map(coin => (
+              <SelectItem key={coin.symbol} value={coin.symbol}>
+                {coin.symbol} - {coin.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Charts Grid */}
