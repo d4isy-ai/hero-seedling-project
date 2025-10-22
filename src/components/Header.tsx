@@ -20,20 +20,6 @@ export const Header = () => {
         </div>
         
         <div className="flex items-center gap-4">
-          <div className="hidden md:flex items-center gap-6 text-sm">
-            <span className="text-muted-foreground">
-              Balance: <span className="text-success font-semibold">$1,006.06</span>
-            </span>
-            <span className="text-muted-foreground">
-              Open: <span className="text-foreground font-semibold">1</span>
-            </span>
-            <span className="text-muted-foreground">
-              Closed: <span className="text-foreground font-semibold">376</span>
-            </span>
-            <span className="text-muted-foreground">
-              PnL: <span className="text-success font-semibold">+$42.12</span>
-            </span>
-          </div>
           <Button variant="ghost" size="icon" asChild>
             <a href="https://x.com/d4isy_ai" target="_blank" rel="noopener noreferrer">
               <img src={xLogo} alt="X" className="w-4 h-4" />
