@@ -1,49 +1,176 @@
-🌌 Stardust — Autonomous Trading Agent
+# D4ISY - Autonomous Vibe Trader
 
-Stardust is an autonomous trading agent powered by the ASTER API
-.
-It executes live trades using a multi-factor model that continuously adapts to market volatility for optimal execution and risk management.
+![D4ISY Banner](src/assets/daisy-logo-new.png)
 
-🚀 Overview
+## Overview
 
-Stardust analyzes and reacts to multiple real-time market indicators:
+D4ISY is an autonomous leverage trading AI agent powered by the Aster API. Inspired by the flower family that Aster originates from, D4ISY combines advanced AI analysis with real-time market data to provide comprehensive cryptocurrency trading insights and signals.
 
-Liquidation Heatmaps — Detects high-risk liquidation zones and market pressure points.
+## Features
 
-Whale Order Blocks — Tracks large-volume traders and their order flow.
+### 🤖 AI Market Analysis
+- Advanced AI-powered market analysis for any token available on Aster
+- Real-time insights powered by cutting-edge language models
+- Interactive chat interface for market intelligence queries
+- Support for 40+ major cryptocurrency trading pairs
 
-Open Interest — Gauges trader positioning and potential squeezes.
+### 📊 Altcoin Futures Key Indicators
+Real-time monitoring of critical market metrics:
+- **Open Interest**: Track total open positions across exchanges
+- **Funding Rates**: Monitor average funding rates to gauge market sentiment
+- **Long/Short Ratios**: Analyze trader positioning and market bias
+- **24h Liquidations**: Track liquidation events across the market
+- **Fear & Greed Index**: Gauge overall market sentiment
+- **RSI Indicators**: Technical analysis for overbought/oversold conditions
+- **Active Buy Ratios**: Monitor buying pressure across exchanges
+- **Options Open Interest**: Track derivatives market activity
 
-Funding Rates — Identifies sentiment imbalance between longs and shorts.
+### 📈 Key Indicator Charts
+Interactive visualizations including:
+- 24-hour price history with real-time updates
+- Open interest trends across major cryptocurrencies
+- Exchange-specific active buy ratios
+- Liquidation analysis by exchange (longs vs shorts)
+- 30-day Fear & Greed Index history
 
-Sentiment Signals — Incorporates on-chain and social data for adaptive market bias.
+### 🎯 D4ISY Signals & Trading Intelligence
+- Live trading signals with detailed rationale
+- Real-time position tracking
+- Performance metrics (realized/unrealized PnL)
+- Trade history and analytics
 
-Together, these signals form Stardust’s multi-factor model, allowing it to trade dynamically with precision.
+### 🌐 Live Trading
+- Integration with Aster Exchange for live trading data
+- Real-time order book visualization
+- Active positions monitoring
+- Market ticker information
 
-🧠 How It Works
+### 🔍 Comprehensive Market Coverage
+Support for 20+ major cryptocurrencies:
+- Bitcoin (BTC), Ethereum (ETH), BNB, Solana (SOL)
+- XRP, Cardano (ADA), Dogecoin (DOGE), Polygon (MATIC)
+- Polkadot (DOT), Litecoin (LTC), Avalanche (AVAX)
+- Chainlink (LINK), Uniswap (UNI), Cosmos (ATOM)
+- And many more altcoins
 
-Connects to the ASTER API for real-time market data and execution.
+## Technology Stack
 
-Runs autonomous strategies that open and close positions across multiple assets.
+- **Frontend**: React 18 with TypeScript
+- **Styling**: Tailwind CSS with custom design system
+- **Charts**: Recharts for interactive data visualizations
+- **Data Fetching**: TanStack Query (React Query)
+- **Backend**: Supabase Edge Functions
+- **AI Integration**: Advanced language models for market analysis
+- **Internationalization**: i18next (English & Chinese support)
+- **APIs**: 
+  - Aster Exchange API
+  - CoinGlass Market Data API
 
-Adjusts leverage and position sizing based on volatility and market sentiment.
+## Getting Started
 
-Displays live trades in the Stardust Live Simulation dashboard.
+### Prerequisites
+- Node.js 18+ or Bun runtime
+- npm, yarn, or bun package manager
 
-🧩 Live Testing
+### Installation
 
-Stardust is currently active in the Aster Vibe Trading Arena, where its models are being tested and refined in live conditions.
+```bash
+# Clone the repository
+git clone https://github.com/your-username/D4ISY.git
 
-⚙️ Tech Stack
+# Navigate to project directory
+cd D4ISY
 
-Python / FastAPI backend
+# Install dependencies
+npm install
+# or
+bun install
 
-ASTER API for execution and analytics
+# Start development server
+npm run dev
+# or
+bun run dev
+```
 
-WebSocket live market feeds
+### Environment Variables
 
-React + Vite dashboard for real-time visualization
+Create a `.env` file in the root directory with the following variables:
 
-📈 Vision
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_key
+VITE_SUPABASE_PROJECT_ID=your_project_id
+```
 
-To evolve into a fully autonomous multi-asset trading AI capable of running self-optimizing strategies across networks — starting with ETH, BNB, and SOL.
+## Project Structure
+
+```
+D4ISY/
+├── src/
+│   ├── components/          # React components
+│   │   ├── ui/             # Reusable UI components
+│   │   ├── AIAnalysisChat.tsx
+│   │   ├── MarketOverview.tsx
+│   │   ├── MarketCharts.tsx
+│   │   ├── DaisySimulation.tsx
+│   │   └── ...
+│   ├── hooks/              # Custom React hooks
+│   ├── i18n/               # Internationalization
+│   │   └── locales/        # Language files (en, zh)
+│   ├── integrations/       # External service integrations
+│   │   └── supabase/       # Supabase configuration
+│   ├── pages/              # Page components
+│   └── assets/             # Static assets
+├── supabase/
+│   └── functions/          # Edge Functions for data fetching
+│       ├── ai-market-analysis/
+│       ├── aster-exchange-info/
+│       ├── aster-market-ticker/
+│       ├── aster-order-book/
+│       └── coinglass-data/
+└── public/                 # Public assets
+```
+
+## Key Components
+
+### AI Analysis Engine
+Provides intelligent market analysis using advanced language models, capable of analyzing market trends, technical indicators, and sentiment across multiple tokens.
+
+### Market Overview Dashboard
+Real-time monitoring dashboard displaying 8 critical market indicators with support for 20+ cryptocurrencies.
+
+### Interactive Charts
+Comprehensive charting system with 5 different visualization types tracking price, open interest, exchange metrics, liquidations, and sentiment indicators.
+
+### Multilingual Support
+Full support for English and Chinese languages, making D4ISY accessible to global traders.
+
+## API Integration
+
+D4ISY integrates with multiple data sources:
+- **Aster Exchange**: Live trading data, order books, and market information
+- **CoinGlass**: Advanced derivatives market data including OI, funding rates, liquidations
+- **Lovable AI**: Intelligent market analysis and insights
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Inspired by the Aster flower family
+- Powered by Aster API
+- Built with Lovable
+- Market data provided by CoinGlass
+
+## Support
+
+For support, questions, or feature requests, please open an issue on GitHub.
+
+---
+
+**D4ISY** - Your Autonomous Vibe Trader for the crypto markets 🌸
