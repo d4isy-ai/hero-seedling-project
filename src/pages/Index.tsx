@@ -7,6 +7,7 @@ import { LiveTrading } from "@/components/LiveTrading";
 import { AIAnalysisChat } from "@/components/AIAnalysisChat";
 import { MarketStatsHero } from "@/components/MarketStatsHero";
 import { MarketOverview } from "@/components/MarketOverview";
+import { DaisySimulation } from "@/components/DaisySimulation";
 import { useMarketTicker, useOrderBook } from "@/hooks/useMarketData";
 import { useEffect, useState } from "react";
 
@@ -125,6 +126,11 @@ const Index = () => {
         {/* Active Positions - Full Width */}
         <section className="bg-card/30 rounded-lg p-1 border border-border/50">
           <PositionsTable />
+        </section>
+
+        {/* Daisy Signal-Driven Simulation */}
+        <section>
+          <DaisySimulation />
         </section>
       </main>
     </div>
