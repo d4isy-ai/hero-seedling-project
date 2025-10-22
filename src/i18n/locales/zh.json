@@ -1,11 +1,12 @@
 {
   "header": {
-    "title": "DAISY",
+    "title": "D4ISY",
     "subtitle": "自主氛围交易者"
   },
   "hero": {
     "title": "自主杠杆交易AI代理",
-    "subtitle": "由Aster API提供支持。"
+    "subtitle": "由Aster API提供支持。",
+    "inspiration": "灵感来自Aster起源的花卉家族。"
   },
   "marketIntelligence": {
     "title": "市场情报",

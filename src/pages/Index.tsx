@@ -74,6 +74,9 @@ const Index = () => {
           <p className="text-primary-foreground/80">
             {t('hero.subtitle')}
           </p>
+          <p className="text-primary-foreground/70 text-sm mt-2 italic">
+            {t('hero.inspiration')}
+          </p>
         </div>
 
         {/* Market Overview Section */}

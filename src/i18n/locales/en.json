@@ -1,11 +1,12 @@
 {
   "header": {
-    "title": "DAISY",
+    "title": "D4ISY",
     "subtitle": "Autonomous Vibe Trader"
   },
   "hero": {
     "title": "Autonomous leverage trading AI agent",
-    "subtitle": "Powered by the Aster API."
+    "subtitle": "Powered by the Aster API.",
+    "inspiration": "Inspired by the flower family that Aster originates from."
   },
   "marketIntelligence": {
     "title": "Market Intelligence",
