@@ -1,4 +1,4 @@
-import { Github } from "lucide-react";
+import { Github, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import stardustLogo from "@/assets/stardust-logo.jpg";
 
@@ -33,6 +33,11 @@ export const Header = () => {
               PnL: <span className="text-success font-semibold">+$42.12</span>
             </span>
           </div>
+          <Button variant="ghost" size="icon" asChild>
+            <a href="https://x.com/d4isy_ai" target="_blank" rel="noopener noreferrer">
+              <Twitter className="w-5 h-5" />
+            </a>
+          </Button>
           <Button variant="ghost" size="icon">
             <Github className="w-5 h-5" />
           </Button>
