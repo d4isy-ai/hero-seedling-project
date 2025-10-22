@@ -71,6 +71,11 @@ const Index = () => {
           </p>
         </div>
 
+        {/* Market Overview Dashboard - First */}
+        <section>
+          <MarketOverviewDashboard />
+        </section>
+
         {/* Two Column Layout - Trading + AI */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left Column - Daisy Live Trading */}
@@ -81,7 +86,7 @@ const Index = () => {
             <LiveTrading />
           </section>
 
-          {/* Right Column - AI Strategy Engine */}
+          {/* Right Column - AI Market Analysis */}
           <section className="h-[600px]">
             <AIAnalysisChat />
           </section>
@@ -136,11 +141,6 @@ const Index = () => {
         {/* Active Positions - Full Width */}
         <section className="bg-card/30 rounded-lg p-1 border border-border/50">
           <PositionsTable />
-        </section>
-
-        {/* Market Overview Dashboard with CoinGlass Data */}
-        <section className="mt-8">
-          <MarketOverviewDashboard />
         </section>
       </main>
     </div>
