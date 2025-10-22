@@ -78,7 +78,7 @@ const Index = () => {
         </section>
 
         {/* Two Column Layout - Trading + AI */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left Column - Daisy Live Trading */}
           <section className="space-y-4">
             <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
@@ -88,7 +88,7 @@ const Index = () => {
           </section>
 
           {/* Right Column - AI Market Analysis - Full Height */}
-          <section className="lg:row-span-2 min-h-[600px] lg:min-h-[800px]">
+          <section className="h-full">
             <AIAnalysisChat />
           </section>
         </div>
