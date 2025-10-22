@@ -1,73 +1,49 @@
-# Welcome to your Lovable project
+🌌 Stardust — Autonomous Trading Agent
 
-## Project info
+Stardust is an autonomous trading agent powered by the ASTER API
+.
+It executes live trades using a multi-factor model that continuously adapts to market volatility for optimal execution and risk management.
 
-**URL**: https://lovable.dev/projects/a0c4c0bc-b0a3-49c2-aae0-0605308705a3
+🚀 Overview
 
-## How can I edit this code?
+Stardust analyzes and reacts to multiple real-time market indicators:
 
-There are several ways of editing your application.
+Liquidation Heatmaps — Detects high-risk liquidation zones and market pressure points.
 
-**Use Lovable**
+Whale Order Blocks — Tracks large-volume traders and their order flow.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a0c4c0bc-b0a3-49c2-aae0-0605308705a3) and start prompting.
+Open Interest — Gauges trader positioning and potential squeezes.
 
-Changes made via Lovable will be committed automatically to this repo.
+Funding Rates — Identifies sentiment imbalance between longs and shorts.
 
-**Use your preferred IDE**
+Sentiment Signals — Incorporates on-chain and social data for adaptive market bias.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Together, these signals form Stardust’s multi-factor model, allowing it to trade dynamically with precision.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+🧠 How It Works
 
-Follow these steps:
+Connects to the ASTER API for real-time market data and execution.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Runs autonomous strategies that open and close positions across multiple assets.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Adjusts leverage and position sizing based on volatility and market sentiment.
 
-# Step 3: Install the necessary dependencies.
-npm i
+Displays live trades in the Stardust Live Simulation dashboard.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+🧩 Live Testing
 
-**Edit a file directly in GitHub**
+Stardust is currently active in the Aster Vibe Trading Arena, where its models are being tested and refined in live conditions.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+⚙️ Tech Stack
 
-**Use GitHub Codespaces**
+Python / FastAPI backend
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+ASTER API for execution and analytics
 
-## What technologies are used for this project?
+WebSocket live market feeds
 
-This project is built with:
+React + Vite dashboard for real-time visualization
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+📈 Vision
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/a0c4c0bc-b0a3-49c2-aae0-0605308705a3) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+To evolve into a fully autonomous multi-asset trading AI capable of running self-optimizing strategies across networks — starting with ETH, BNB, and SOL.
