@@ -21,8 +21,9 @@ interface PortfolioPoint {
   balance: number;
 }
 
-const INITIAL_CAPITAL = 1000;
+const INITIAL_CAPITAL = 1378;
 const TRADING_SYMBOLS = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT'];
+const MIN_OPEN_TRADES = 3;
 
 export const LiveTrading = () => {
   const { data: tickerData } = useMarketTicker();
@@ -32,20 +33,51 @@ export const LiveTrading = () => {
   ]);
   const [currentBalance, setCurrentBalance] = useState(INITIAL_CAPITAL);
 
+  // Initialize with 3 open trades on first load
+  useEffect(() => {
+    if (!tickerData || !Array.isArray(tickerData) || trades.length > 0) return;
+    
+    const initialTrades: Trade[] = [];
+    for (let i = 0; i < MIN_OPEN_TRADES; i++) {
+      const symbol = TRADING_SYMBOLS[i % TRADING_SYMBOLS.length];
+      const ticker = tickerData.find((t: any) => t.symbol === symbol);
+      
+      if (ticker) {
+        const direction = Math.random() > 0.5 ? 'long' : 'short';
+        const price = parseFloat(ticker.lastPrice);
+        const size = (INITIAL_CAPITAL * 0.1) + (Math.random() * INITIAL_CAPITAL * 0.05);
+        
+        initialTrades.push({
+          id: `trade_${Date.now()}_${i}`,
+          timestamp: new Date(Date.now() - Math.random() * 60000), // Stagger timestamps
+          asset: symbol.replace('USDT', ''),
+          direction,
+          entryPrice: price * (1 + (Math.random() - 0.5) * 0.01), // Slightly varied entry
+          size,
+          status: 'open'
+        });
+      }
+    }
+    
+    setTrades(initialTrades);
+  }, [tickerData]);
+
+  // Update open positions with live PnL and manage trades
   useEffect(() => {
     if (!tickerData || !Array.isArray(tickerData)) return;
 
     const interval = setInterval(() => {
-      // 30% chance to open a new trade
-      if (Math.random() < 0.3 && trades.filter(t => t.status === 'open').length < 3) {
+      const openCount = trades.filter(t => t.status === 'open').length;
+      
+      // Always maintain MIN_OPEN_TRADES
+      if (openCount < MIN_OPEN_TRADES) {
         const symbol = TRADING_SYMBOLS[Math.floor(Math.random() * TRADING_SYMBOLS.length)];
         const ticker = tickerData.find((t: any) => t.symbol === symbol);
         
         if (ticker) {
           const direction = Math.random() > 0.5 ? 'long' : 'short';
           const price = parseFloat(ticker.lastPrice);
-          const maxSize = currentBalance * 0.15; // Max 15% of balance per trade
-          const size = Math.random() * maxSize + maxSize * 0.3;
+          const size = (currentBalance * 0.08) + (Math.random() * currentBalance * 0.07);
           
           const newTrade: Trade = {
             id: `trade_${Date.now()}`,
@@ -71,12 +103,12 @@ export const LiveTrading = () => {
             const currentPrice = parseFloat(ticker.lastPrice);
             const priceChange = ((currentPrice - trade.entryPrice) / trade.entryPrice) * 100;
             
-            // Close position with 20% chance or if profit > 2% or loss > 1.5%
-            const shouldClose = Math.random() < 0.2 || 
-                              (trade.direction === 'long' && priceChange > 2) ||
-                              (trade.direction === 'long' && priceChange < -1.5) ||
-                              (trade.direction === 'short' && priceChange < -2) ||
-                              (trade.direction === 'short' && priceChange > 1.5);
+            // Close position logic: random chance or profit/loss thresholds
+            const shouldClose = (Math.random() < 0.15 && openCount > MIN_OPEN_TRADES) || 
+                              (trade.direction === 'long' && priceChange > 2.5) ||
+                              (trade.direction === 'long' && priceChange < -2) ||
+                              (trade.direction === 'short' && priceChange < -2.5) ||
+                              (trade.direction === 'short' && priceChange > 2);
 
             if (shouldClose) {
               const multiplier = trade.direction === 'long' ? 1 : -1;
@@ -100,14 +132,28 @@ export const LiveTrading = () => {
         });
         return updated;
       });
-    }, 8000); // Check every 8 seconds
+    }, 3000); // Update every 3 seconds for live feel
 
     return () => clearInterval(interval);
   }, [tickerData, trades, currentBalance]);
 
   const openPositions = trades.filter(t => t.status === 'open');
   const closedTrades = trades.filter(t => t.status === 'closed');
-  const totalPnL = currentBalance - INITIAL_CAPITAL;
+  
+  // Calculate live PnL for open positions
+  const livePnL = openPositions.reduce((acc, trade) => {
+    if (!tickerData || !Array.isArray(tickerData)) return acc;
+    const ticker = tickerData.find((t: any) => t.symbol === `${trade.asset}USDT`);
+    if (!ticker) return acc;
+    
+    const currentPrice = parseFloat(ticker.lastPrice);
+    const multiplier = trade.direction === 'long' ? 1 : -1;
+    const pnl = (trade.size / trade.entryPrice) * (currentPrice - trade.entryPrice) * multiplier;
+    return acc + pnl;
+  }, 0);
+  
+  const totalPnL = (currentBalance - INITIAL_CAPITAL) + livePnL;
+  const currentEquity = currentBalance + livePnL;
   const totalPnLPercent = ((totalPnL / INITIAL_CAPITAL) * 100).toFixed(2);
 
   return (
@@ -115,19 +161,24 @@ export const LiveTrading = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Portfolio Value</CardDescription>
+            <CardDescription>Current Equity</CardDescription>
             <CardTitle className="text-3xl font-bold">
-              ${currentBalance.toFixed(2)}
+              ${currentEquity.toFixed(2)}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-center gap-2">
-              <Badge variant={totalPnL >= 0 ? "default" : "destructive"}>
-                {totalPnL >= 0 ? '+' : ''}{totalPnL.toFixed(2)} USD
-              </Badge>
-              <span className={`text-sm ${totalPnL >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                ({totalPnL >= 0 ? '+' : ''}{totalPnLPercent}%)
-              </span>
+            <div className="space-y-1">
+              <div className="text-xs text-muted-foreground">
+                Starting Balance: ${INITIAL_CAPITAL.toFixed(2)}
+              </div>
+              <div className="flex items-center gap-2">
+                <Badge variant={totalPnL >= 0 ? "default" : "destructive"}>
+                  {totalPnL >= 0 ? '+' : ''}{totalPnL.toFixed(2)} USD
+                </Badge>
+                <span className={`text-sm font-medium ${totalPnL >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  ({totalPnL >= 0 ? '+' : ''}{totalPnLPercent}%)
+                </span>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -167,7 +218,7 @@ export const LiveTrading = () => {
             <LineChart data={portfolioHistory}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" />
-              <YAxis domain={[900, 'auto']} />
+              <YAxis domain={[1200, 'auto']} />
               <Tooltip />
               <Line 
                 type="monotone" 
@@ -190,48 +241,75 @@ export const LiveTrading = () => {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b text-left text-sm text-muted-foreground">
-                  <th className="pb-2">Time</th>
+                  <tr className="border-b text-left text-sm text-muted-foreground">
+                  <th className="pb-2">Time (UTC)</th>
                   <th className="pb-2">Asset</th>
-                  <th className="pb-2">Type</th>
+                  <th className="pb-2">Direction</th>
                   <th className="pb-2">Entry</th>
                   <th className="pb-2">Exit</th>
-                  <th className="pb-2">Size</th>
-                  <th className="pb-2">PNL</th>
+                  <th className="pb-2">PnL ($)</th>
+                  <th className="pb-2">PnL (%)</th>
                   <th className="pb-2">Status</th>
                 </tr>
               </thead>
               <tbody className="text-sm">
-                {trades.slice(0, 15).map((trade) => (
-                  <tr key={trade.id} className="border-b">
-                    <td className="py-2">{trade.timestamp.toLocaleTimeString()}</td>
-                    <td className="py-2 font-medium">{trade.asset}</td>
-                    <td className="py-2">
-                      <Badge variant={trade.direction === 'long' ? 'default' : 'secondary'}>
-                        {trade.direction.toUpperCase()}
-                      </Badge>
-                    </td>
-                    <td className="py-2">${trade.entryPrice.toFixed(2)}</td>
-                    <td className="py-2">
-                      {trade.exitPrice ? `$${trade.exitPrice.toFixed(2)}` : '-'}
-                    </td>
-                    <td className="py-2">${trade.size.toFixed(2)}</td>
-                    <td className={`py-2 font-medium ${
-                      trade.pnl === undefined ? '' : 
-                      trade.pnl >= 0 ? 'text-green-500' : 'text-red-500'
-                    }`}>
-                      {trade.pnl !== undefined 
-                        ? `${trade.pnl >= 0 ? '+' : ''}$${trade.pnl.toFixed(2)}`
-                        : '-'
-                      }
-                    </td>
-                    <td className="py-2">
-                      <Badge variant={trade.status === 'open' ? 'outline' : 'secondary'}>
-                        {trade.status}
-                      </Badge>
-                    </td>
-                  </tr>
-                ))}
+                {trades.slice(0, 15).map((trade) => {
+                  let currentPnL = trade.pnl;
+                  let currentPnLPercent = 0;
+                  
+                  // Calculate live PnL for open trades
+                  if (trade.status === 'open' && tickerData && Array.isArray(tickerData)) {
+                    const ticker = tickerData.find((t: any) => t.symbol === `${trade.asset}USDT`);
+                    if (ticker) {
+                      const currentPrice = parseFloat(ticker.lastPrice);
+                      const multiplier = trade.direction === 'long' ? 1 : -1;
+                      currentPnL = (trade.size / trade.entryPrice) * (currentPrice - trade.entryPrice) * multiplier;
+                      currentPnLPercent = ((currentPrice - trade.entryPrice) / trade.entryPrice) * 100 * multiplier;
+                    }
+                  } else if (trade.pnl !== undefined && trade.exitPrice) {
+                    const multiplier = trade.direction === 'long' ? 1 : -1;
+                    currentPnLPercent = ((trade.exitPrice - trade.entryPrice) / trade.entryPrice) * 100 * multiplier;
+                  }
+                  
+                  return (
+                    <tr key={trade.id} className="border-b">
+                      <td className="py-2">{trade.timestamp.toLocaleTimeString('en-US', { timeZone: 'UTC', hour12: false })}</td>
+                      <td className="py-2 font-medium">{trade.asset}</td>
+                      <td className="py-2">
+                        <Badge variant={trade.direction === 'long' ? 'default' : 'secondary'}>
+                          {trade.direction.toUpperCase()}
+                        </Badge>
+                      </td>
+                      <td className="py-2">${trade.entryPrice.toFixed(2)}</td>
+                      <td className="py-2">
+                        {trade.exitPrice ? `$${trade.exitPrice.toFixed(2)}` : '-'}
+                      </td>
+                      <td className={`py-2 font-medium ${
+                        currentPnL === undefined ? '' : 
+                        currentPnL >= 0 ? 'text-green-500' : 'text-red-500'
+                      }`}>
+                        {currentPnL !== undefined 
+                          ? `${currentPnL >= 0 ? '+' : ''}$${currentPnL.toFixed(2)}`
+                          : '-'
+                        }
+                      </td>
+                      <td className={`py-2 font-medium ${
+                        currentPnLPercent === 0 ? '' : 
+                        currentPnLPercent >= 0 ? 'text-green-500' : 'text-red-500'
+                      }`}>
+                        {currentPnLPercent !== 0 
+                          ? `${currentPnLPercent >= 0 ? '+' : ''}${currentPnLPercent.toFixed(2)}%`
+                          : '-'
+                        }
+                      </td>
+                      <td className="py-2">
+                        <Badge variant={trade.status === 'open' ? 'outline' : 'secondary'}>
+                          {trade.status}
+                        </Badge>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

@@ -30,7 +30,7 @@ export const useMarketTicker = (symbol?: string) => {
       if (error) throw error;
       return data as TickerData | TickerData[];
     },
-    refetchInterval: 5000, // Refresh every 5 seconds
+    refetchInterval: 2000, // Refresh every 2 seconds for live trading
   });
 };
 
