@@ -117,27 +117,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Order Books - Responsive Grid */}
-        <section>
-          <h2 className="text-xl font-bold text-foreground mb-4">Order Flow</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-            <OrderBook 
-              symbol="ASTERUSDT" 
-              {...formatOrderBookData(orderBookASTER)}
-              isLoading={loadingASTER}
-            />
-            <OrderBook 
-              symbol="BTCUSDT" 
-              {...formatOrderBookData(orderBookBTC)}
-              isLoading={loadingBTC}
-            />
-            <OrderBook 
-              symbol="ETHUSDT" 
-              {...formatOrderBookData(orderBookETH)}
-              isLoading={loadingETH}
-            />
-          </div>
-        </section>
 
         {/* Active Positions - Full Width */}
         <section className="bg-card/30 rounded-lg p-1 border border-border/50">
