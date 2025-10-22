@@ -66,7 +66,7 @@ const Index = () => {
       <Header />
       
       <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-6 sm:space-y-8">
-        {/* Hero Section with Gradient background */}
+        {/* Hero Section with Gradient */}
         <div className="bg-gradient-daisy rounded-xl p-6 text-center shadow-glow-primary">
           <h2 className="text-3xl font-bold text-primary-foreground mb-2">
             {t('hero.title')}
