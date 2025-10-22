@@ -1,13 +1,14 @@
-import { Sparkles, Github } from "lucide-react";
+import { Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import stardustLogo from "@/assets/stardust-logo.jpg";
 
 export const Header = () => {
   return (
     <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-cosmic rounded-lg flex items-center justify-center shadow-glow-primary">
-            <Sparkles className="w-6 h-6 text-primary-foreground" />
+          <div className="w-10 h-10 rounded-lg overflow-hidden shadow-glow-primary">
+            <img src={stardustLogo} alt="Stardust Logo" className="w-full h-full object-cover" />
           </div>
           <div>
             <h1 className="text-2xl font-bold bg-gradient-cosmic bg-clip-text text-transparent">
