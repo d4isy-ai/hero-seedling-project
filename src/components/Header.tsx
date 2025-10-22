@@ -2,7 +2,7 @@ import { Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { useTranslation } from "react-i18next";
-import daisyLogo from "@/assets/daisy-logo.png";
+import daisyLogo from "@/assets/daisy-logo-new.png";
 import xLogo from "@/assets/x-logo.png";
 
 export const Header = () => {
