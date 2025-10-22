@@ -75,6 +75,8 @@ const Index = () => {
           </p>
         </div>
 
+        {/* Market Overview Section */}
+        <MarketOverview />
 
         {/* Daisy Signals */}
         <section>
@@ -109,9 +111,6 @@ const Index = () => {
             )}
           </div>
         </section>
-
-        {/* Market Overview Section */}
-        <MarketOverview />
 
         {/* Market Intelligence Section */}
         <section>
