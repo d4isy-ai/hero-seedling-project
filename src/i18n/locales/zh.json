@@ -54,5 +54,13 @@
     "price": "价格",
     "amount": "数量",
     "total": "总计"
+  },
+  "charts": {
+    "priceHistory": "价格历史",
+    "openInterest": "持仓量",
+    "exchangeBuyRatio": "各交易所主动买入比率",
+    "exchangeLiquidations": "各交易所清算",
+    "fearGreedHistory": "恐惧贪婪指数",
+    "days": "天"
   }
 }

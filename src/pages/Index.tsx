@@ -8,6 +8,7 @@ import { AIAnalysisChat } from "@/components/AIAnalysisChat";
 import { MarketStatsHero } from "@/components/MarketStatsHero";
 import { MarketOverview } from "@/components/MarketOverview";
 import { DaisySimulation } from "@/components/DaisySimulation";
+import { MarketCharts } from "@/components/MarketCharts";
 import { useMarketTicker, useOrderBook } from "@/hooks/useMarketData";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -118,7 +119,10 @@ const Index = () => {
           <MarketStatsHero markets={markets} isLoading={tickerLoading} />
         </section>
 
-
+        {/* Market Charts Section */}
+        <section>
+          <MarketCharts />
+        </section>
 
       </main>
     </div>

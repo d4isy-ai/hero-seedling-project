@@ -54,5 +54,13 @@
     "price": "Price",
     "amount": "Amount",
     "total": "Total"
+  },
+  "charts": {
+    "priceHistory": "Price History",
+    "openInterest": "Open Interest",
+    "exchangeBuyRatio": "Active Buy Ratio by Exchange",
+    "exchangeLiquidations": "Liquidations by Exchange",
+    "fearGreedHistory": "Fear & Greed Index",
+    "days": "days"
   }
 }
