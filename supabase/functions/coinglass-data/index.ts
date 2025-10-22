@@ -20,6 +20,42 @@ serve(async (req) => {
 
     const baseUrl = 'https://open-api-v4.coinglass.com/api';
     
+    // Special endpoint to get all available coins
+    if (endpoint === 'availableCoins') {
+      console.log('Fetching available coins from CoinGlass');
+      
+      const response = await fetch(`${baseUrl}/futures/coins-markets`, {
+        headers: {
+          'CG-API-KEY': COINGLASS_API_KEY,
+          'Accept': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('CoinGlass API error:', response.status, errorText);
+        throw new Error(`CoinGlass API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (data.code !== "0") {
+        console.error('CoinGlass API returned error:', data);
+        throw new Error(data.msg || 'CoinGlass API returned an error');
+      }
+
+      // Extract unique symbols from the data
+      const symbols = data.data?.map((coin: any) => coin.symbol).filter(Boolean) || [];
+      
+      return new Response(JSON.stringify({ 
+        code: "0",
+        msg: "success",
+        data: { symbols } 
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    
     // Use the coins-markets endpoint which has all the data we need
     const apiPath = '/futures/coins-markets';
 

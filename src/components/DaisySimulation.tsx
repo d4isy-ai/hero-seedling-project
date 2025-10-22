@@ -38,7 +38,6 @@ interface EquityPoint {
   equity: number;
 }
 
-const SYMBOLS = ["BTC", "ETH", "BNB", "SOL"];
 const STARTING_BALANCE = 1000;
 const MIN_TRADE_SIZE = 10;
 const MAX_TRADE_SIZE = 20;
@@ -48,6 +47,7 @@ const SL_PERCENT = 0.8;
 const TIME_EXIT_MS = 6 * 60 * 1000; // 6 minutes
 
 export const DaisySimulation = () => {
+  const [symbols, setSymbols] = useState<string[]>(["BTC", "ETH", "BNB", "SOL"]);
   const [signals, setSignals] = useState<Signal[]>([]);
   const [openTrades, setOpenTrades] = useState<Trade[]>([]);
   const [closedTrades, setClosedTrades] = useState<Trade[]>([]);
@@ -56,29 +56,35 @@ export const DaisySimulation = () => {
     { timestamp: Date.now(), equity: STARTING_BALANCE }
   ]);
 
+  // Fetch available coins from CoinGlass
+  const { data: availableCoins } = useCoinGlassData("", "availableCoins");
+
+  // Update symbols when available coins are fetched
+  useEffect(() => {
+    if (availableCoins?.data?.symbols && Array.isArray(availableCoins.data.symbols)) {
+      // Filter to top traded coins and limit to 10 for performance
+      const topCoins = availableCoins.data.symbols
+        .filter((s: string) => ["BTC", "ETH", "BNB", "SOL", "XRP", "ADA", "DOGE", "MATIC", "DOT", "LINK"].includes(s))
+        .slice(0, 10);
+      if (topCoins.length > 0) {
+        setSymbols(topCoins);
+      }
+    }
+  }, [availableCoins]);
+
   // Fetch market data
   const { data: tickerData } = useMarketTicker();
   
-  // Fetch Coinglass data for each symbol
-  const btcOI = useCoinGlassData("BTC", "openInterest");
-  const btcFunding = useCoinGlassData("BTC", "fundingRate");
-  const btcLS = useCoinGlassData("BTC", "longShortRatio");
-  const btcLiq = useCoinGlassData("BTC", "liquidation");
-
-  const ethOI = useCoinGlassData("ETH", "openInterest");
-  const ethFunding = useCoinGlassData("ETH", "fundingRate");
-  const ethLS = useCoinGlassData("ETH", "longShortRatio");
-  const ethLiq = useCoinGlassData("ETH", "liquidation");
-
-  const bnbOI = useCoinGlassData("BNB", "openInterest");
-  const bnbFunding = useCoinGlassData("BNB", "fundingRate");
-  const bnbLS = useCoinGlassData("BNB", "longShortRatio");
-  const bnbLiq = useCoinGlassData("BNB", "liquidation");
-
-  const solOI = useCoinGlassData("SOL", "openInterest");
-  const solFunding = useCoinGlassData("SOL", "fundingRate");
-  const solLS = useCoinGlassData("SOL", "longShortRatio");
-  const solLiq = useCoinGlassData("SOL", "liquidation");
+  // Dynamically fetch Coinglass data for all symbols
+  const coinglassData = symbols.reduce((acc, symbol) => {
+    acc[symbol] = {
+      oi: useCoinGlassData(symbol, "openInterest"),
+      funding: useCoinGlassData(symbol, "fundingRate"),
+      ls: useCoinGlassData(symbol, "longShortRatio"),
+      liq: useCoinGlassData(symbol, "liquidation"),
+    };
+    return acc;
+  }, {} as Record<string, any>);
 
   // Calculate composite signal
   const calculateSignal = (
@@ -176,55 +182,29 @@ export const DaisySimulation = () => {
     const updateSignals = () => {
       const newSignals: Signal[] = [];
 
-      if (btcFunding.data && btcOI.data && btcLS.data && btcLiq.data) {
-        newSignals.push(calculateSignal(
-          "BTC",
-          btcFunding.data.data?.weightedFundingRate || 0,
-          btcOI.data.data?.changePercent || 0,
-          btcLS.data.data?.ratio || 1,
-          btcLiq.data.data?.totalLiquidation || 0
-        ));
-      }
-
-      if (ethFunding.data && ethOI.data && ethLS.data && ethLiq.data) {
-        newSignals.push(calculateSignal(
-          "ETH",
-          ethFunding.data.data?.weightedFundingRate || 0,
-          ethOI.data.data?.changePercent || 0,
-          ethLS.data.data?.ratio || 1,
-          ethLiq.data.data?.totalLiquidation || 0
-        ));
-      }
-
-      if (bnbFunding.data && bnbOI.data && bnbLS.data && bnbLiq.data) {
-        newSignals.push(calculateSignal(
-          "BNB",
-          bnbFunding.data.data?.weightedFundingRate || 0,
-          bnbOI.data.data?.changePercent || 0,
-          bnbLS.data.data?.ratio || 1,
-          bnbLiq.data.data?.totalLiquidation || 0
-        ));
-      }
-
-      if (solFunding.data && solOI.data && solLS.data && solLiq.data) {
-        newSignals.push(calculateSignal(
-          "SOL",
-          solFunding.data.data?.weightedFundingRate || 0,
-          solOI.data.data?.changePercent || 0,
-          solLS.data.data?.ratio || 1,
-          solLiq.data.data?.totalLiquidation || 0
-        ));
-      }
+      symbols.forEach(symbol => {
+        const data = coinglassData[symbol];
+        if (data?.funding.data && data?.oi.data && data?.ls.data && data?.liq.data) {
+          newSignals.push(calculateSignal(
+            symbol,
+            data.funding.data.data?.weightedFundingRate || 0,
+            data.oi.data.data?.changePercent || 0,
+            data.ls.data.data?.ratio || 1,
+            data.liq.data.data?.totalLiquidation || 0
+          ));
+        }
+      });
 
       if (newSignals.length > 0) {
         setSignals(newSignals);
+        console.log('Updated signals:', newSignals);
       }
     };
 
     updateSignals();
     const interval = setInterval(updateSignals, 30000);
     return () => clearInterval(interval);
-  }, [btcFunding.data, btcOI.data, btcLS.data, btcLiq.data, ethFunding.data, ethOI.data, ethLS.data, ethLiq.data, bnbFunding.data, bnbOI.data, bnbLS.data, bnbLiq.data, solFunding.data, solOI.data, solLS.data, solLiq.data]);
+  }, [symbols, JSON.stringify(coinglassData)]);
 
   // Get current price for symbol
   const getPrice = (symbol: string): number | null => {
@@ -262,7 +242,7 @@ export const DaisySimulation = () => {
       const now = Date.now();
       
       // Check exits
-      const stillOpen: Trade[] = [];
+      let stillOpen: Trade[] = [];
       const newClosed: Trade[] = [];
 
       openTrades.forEach(trade => {
@@ -295,6 +275,7 @@ export const DaisySimulation = () => {
           };
           newClosed.push(closedTrade);
           setRealizedPnL(prev => prev + trade.pnlUSD);
+          console.log('Trade closed:', closedTrade);
         } else {
           stillOpen.push(trade);
         }
@@ -302,57 +283,62 @@ export const DaisySimulation = () => {
 
       if (newClosed.length > 0) {
         setClosedTrades(prev => [...newClosed, ...prev]);
-        setOpenTrades(stillOpen);
       }
 
-      // Check entries (every 15s)
-      if (now % 15000 < 3000) {
-        if (stillOpen.length < MAX_POSITIONS && signals.length > 0) {
-          signals.forEach(signal => {
-            if (stillOpen.length >= MAX_POSITIONS) return;
-            
-            const price = getPrice(signal.symbol);
-            if (!price) return;
+      // Check entries - try to enter on every check if conditions are met
+      if (stillOpen.length < MAX_POSITIONS && signals.length > 0) {
+        // Sort signals by absolute score to prioritize strongest signals
+        const sortedSignals = [...signals].sort((a, b) => Math.abs(b.score) - Math.abs(a.score));
+        
+        for (const signal of sortedSignals) {
+          if (stillOpen.length >= MAX_POSITIONS) break;
+          
+          // Check if we already have a position in this symbol
+          if (stillOpen.some(t => t.symbol === signal.symbol)) continue;
+          
+          const price = getPrice(signal.symbol);
+          if (!price) continue;
 
-            let shouldEnter = false;
-            let direction: "LONG" | "SHORT" | null = null;
+          let shouldEnter = false;
+          let direction: "LONG" | "SHORT" | null = null;
 
-            if (signal.score >= 0.35) {
-              shouldEnter = true;
-              direction = "LONG";
-            } else if (signal.score <= -0.35) {
-              shouldEnter = true;
-              direction = "SHORT";
-            }
+          if (signal.score >= 0.35) {
+            shouldEnter = true;
+            direction = "LONG";
+          } else if (signal.score <= -0.35) {
+            shouldEnter = true;
+            direction = "SHORT";
+          }
 
-            if (shouldEnter && direction) {
-              const sizeUSD = MIN_TRADE_SIZE + Math.random() * (MAX_TRADE_SIZE - MIN_TRADE_SIZE);
-              const qty = sizeUSD / price;
+          if (shouldEnter && direction) {
+            const sizeUSD = MIN_TRADE_SIZE + Math.random() * (MAX_TRADE_SIZE - MIN_TRADE_SIZE);
+            const qty = sizeUSD / price;
 
-              const newTrade: Trade = {
-                id: `${signal.symbol}-${now}`,
-                timestamp: now,
-                symbol: signal.symbol,
-                direction,
-                entryPrice: price,
-                lastPrice: price,
-                quantity: qty,
-                sizeUSD,
-                pnlUSD: 0,
-                pnlPercent: 0,
-                status: "OPEN"
-              };
+            const newTrade: Trade = {
+              id: `${signal.symbol}-${now}`,
+              timestamp: now,
+              symbol: signal.symbol,
+              direction,
+              entryPrice: price,
+              lastPrice: price,
+              quantity: qty,
+              sizeUSD,
+              pnlUSD: 0,
+              pnlPercent: 0,
+              status: "OPEN"
+            };
 
-              stillOpen.push(newTrade);
-            }
-          });
-          setOpenTrades(stillOpen);
+            stillOpen.push(newTrade);
+            console.log('Trade opened:', newTrade);
+          }
         }
       }
+
+      setOpenTrades(stillOpen);
     }, 3000);
 
     return () => clearInterval(checkTradesInterval);
-  }, [openTrades, signals]);
+  }, [openTrades, signals, tickerData]);
 
   // Update equity history
   useEffect(() => {
