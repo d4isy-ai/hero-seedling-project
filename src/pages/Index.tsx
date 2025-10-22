@@ -66,10 +66,10 @@ const Index = () => {
         {/* Hero Section with Gradient */}
         <div className="bg-gradient-daisy rounded-xl p-6 text-center shadow-glow-primary">
           <h2 className="text-3xl font-bold text-primary-foreground mb-2">
-            Autonomous Trading, Simplified
+            Autonomous leverage trading AI agent
           </h2>
           <p className="text-primary-foreground/80">
-            AI-powered market intelligence meets effortless execution
+            Powered by the Aster API.
           </p>
         </div>
 
