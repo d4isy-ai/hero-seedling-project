@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Order {
   price: string;
@@ -10,9 +11,18 @@ interface OrderBookProps {
   symbol: string;
   bids: Order[];
   asks: Order[];
+  isLoading?: boolean;
 }
 
-export const OrderBook = ({ symbol, bids, asks }: OrderBookProps) => {
+export const OrderBook = ({ symbol, bids, asks, isLoading }: OrderBookProps) => {
+  if (isLoading) {
+    return (
+      <Card className="p-4 bg-card border-border">
+        <Skeleton className="h-64 w-full" />
+      </Card>
+    );
+  }
+  
   return (
     <Card className="p-4 bg-card border-border">
       <div className="flex items-center justify-between mb-4">

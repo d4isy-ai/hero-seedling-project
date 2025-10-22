@@ -1,5 +1,6 @@
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface MarketCardProps {
   symbol: string;
@@ -7,10 +8,19 @@ interface MarketCardProps {
   price: string;
   change: number;
   changePercent: string;
+  isLoading?: boolean;
 }
 
-export const MarketCard = ({ symbol, pair, price, change, changePercent }: MarketCardProps) => {
+export const MarketCard = ({ symbol, pair, price, change, changePercent, isLoading }: MarketCardProps) => {
   const isPositive = change >= 0;
+  
+  if (isLoading) {
+    return (
+      <Card className="p-4 bg-secondary/50 border-border">
+        <Skeleton className="h-20 w-full" />
+      </Card>
+    );
+  }
   
   return (
     <Card className="p-4 bg-secondary/50 border-border hover:border-primary/50 transition-all cursor-pointer group">
