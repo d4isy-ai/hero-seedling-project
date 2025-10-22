@@ -1,8 +1,33 @@
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TrendingUp, TrendingDown, DollarSign, Scale, AlertTriangle, Activity, BarChart3, Package } from "lucide-react";
 import { useCoinGlassData } from "@/hooks/useCoinGlassData";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+
+const COINGLASS_COINS = [
+  { symbol: 'BTC', name: 'Bitcoin' },
+  { symbol: 'ETH', name: 'Ethereum' },
+  { symbol: 'BNB', name: 'BNB' },
+  { symbol: 'SOL', name: 'Solana' },
+  { symbol: 'XRP', name: 'Ripple' },
+  { symbol: 'ADA', name: 'Cardano' },
+  { symbol: 'DOGE', name: 'Dogecoin' },
+  { symbol: 'MATIC', name: 'Polygon' },
+  { symbol: 'DOT', name: 'Polkadot' },
+  { symbol: 'LTC', name: 'Litecoin' },
+  { symbol: 'AVAX', name: 'Avalanche' },
+  { symbol: 'LINK', name: 'Chainlink' },
+  { symbol: 'UNI', name: 'Uniswap' },
+  { symbol: 'ATOM', name: 'Cosmos' },
+  { symbol: 'ETC', name: 'Ethereum Classic' },
+  { symbol: 'XLM', name: 'Stellar' },
+  { symbol: 'FIL', name: 'Filecoin' },
+  { symbol: 'TRX', name: 'Tron' },
+  { symbol: 'NEAR', name: 'NEAR Protocol' },
+  { symbol: 'ICP', name: 'Internet Computer' },
+];
 
 interface MetricCardProps {
   title: string;
@@ -44,7 +69,7 @@ const MetricCard = ({ title, value, subtitle, change, icon, isPositive, isLoadin
 
 export const MarketOverview = () => {
   const { t } = useTranslation();
-  const symbol = 'BTC';
+  const [symbol, setSymbol] = useState('BTC');
   
   const { data: openInterest, isLoading: loadingOI } = useCoinGlassData(symbol, 'openInterest');
   const { data: fundingRate, isLoading: loadingFR } = useCoinGlassData(symbol, 'fundingRate');
@@ -88,9 +113,23 @@ export const MarketOverview = () => {
 
   return (
     <section className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-foreground">{t('marketOverview.title')}</h2>
-        <span className="text-sm text-muted-foreground">{t('marketOverview.subtitle')}</span>
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <h2 className="text-xl font-bold text-foreground">{t('marketOverview.title')}</h2>
+          <span className="text-sm text-muted-foreground">{t('marketOverview.subtitle')}</span>
+        </div>
+        <Select value={symbol} onValueChange={setSymbol}>
+          <SelectTrigger className="w-[180px] bg-card">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="bg-card z-50">
+            {COINGLASS_COINS.map(coin => (
+              <SelectItem key={coin.symbol} value={coin.symbol}>
+                {coin.symbol} - {coin.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
