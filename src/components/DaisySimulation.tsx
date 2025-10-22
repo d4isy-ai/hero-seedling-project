@@ -477,20 +477,6 @@ export const DaisySimulation = () => {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            {/* Equity Chart */}
-            <div className="h-24">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={equityHistory}>
-                  <XAxis dataKey="timestamp" hide />
-                  <YAxis domain={['auto', 'auto']} hide />
-                  <Tooltip 
-                    formatter={(value: number) => `$${value.toFixed(2)}`}
-                    labelFormatter={(label) => new Date(label).toLocaleTimeString()}
-                  />
-                  <Line type="monotone" dataKey="equity" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
 
             {/* Open Trades */}
             <div>
@@ -514,34 +500,6 @@ export const DaisySimulation = () => {
                       </div>
                       <div className={`text-xs font-semibold mt-1 ${trade.pnlUSD >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                         PnL: ${trade.pnlUSD.toFixed(2)} ({trade.pnlPercent.toFixed(2)}%)
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Closed Trades */}
-            <div>
-              <h3 className="font-semibold mb-2">Recent Closed Trades</h3>
-              {closedTrades.length === 0 ? (
-                <p className="text-sm text-muted-foreground">No closed trades yet</p>
-              ) : (
-                <div className="space-y-2 max-h-48 overflow-y-auto">
-                  {closedTrades.slice(0, 5).map(trade => (
-                    <div key={trade.id} className="border rounded p-2 text-sm bg-muted/50">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="font-semibold">{trade.symbol}USDT</span>
-                        <Badge variant="outline" className="text-xs">
-                          {trade.exitReason}
-                        </Badge>
-                      </div>
-                      <div className="grid grid-cols-2 gap-1 text-xs text-muted-foreground">
-                        <div>{trade.direction} • ${trade.entryPrice.toFixed(2)} → ${trade.exitPrice?.toFixed(2)}</div>
-                        <div>Hold: {Math.floor((trade.holdTime || 0) / 60000)}m</div>
-                      </div>
-                      <div className={`text-xs font-semibold mt-1 ${trade.pnlUSD >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                        ${trade.pnlUSD.toFixed(2)} ({trade.pnlPercent.toFixed(2)}%)
                       </div>
                     </div>
                   ))}
