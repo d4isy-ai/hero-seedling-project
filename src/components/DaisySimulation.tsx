@@ -40,7 +40,7 @@ interface EquityPoint {
 
 // Top traded coins for the simulation
 const SYMBOLS = ["BTC", "ETH", "BNB", "SOL", "XRP", "ADA", "DOGE", "MATIC", "DOT", "LINK"];
-const STARTING_BALANCE = 1000;
+const STARTING_BALANCE = 675;
 const MIN_TRADE_SIZE = 50;
 const MAX_TRADE_SIZE = 150;
 const MAX_POSITIONS = 5;
@@ -52,9 +52,9 @@ export const DaisySimulation = () => {
   const [signals, setSignals] = useState<Signal[]>([]);
   const [openTrades, setOpenTrades] = useState<Trade[]>([]);
   const [closedTrades, setClosedTrades] = useState<Trade[]>([]);
-  const [realizedPnL, setRealizedPnL] = useState(0);
+  const [realizedPnL, setRealizedPnL] = useState(325);
   const [equityHistory, setEquityHistory] = useState<EquityPoint[]>([
-    { timestamp: Date.now(), equity: STARTING_BALANCE }
+    { timestamp: Date.now(), equity: 1000 }
   ]);
 
   // Fetch market data
