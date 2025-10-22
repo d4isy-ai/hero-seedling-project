@@ -75,11 +75,6 @@ const Index = () => {
           </p>
         </div>
 
-        {/* Market Stats Hero */}
-        <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">{t('marketIntelligence.title')}</h2>
-          <MarketStatsHero markets={markets} isLoading={tickerLoading} />
-        </section>
 
         {/* Daisy Signals */}
         <section>
@@ -115,14 +110,13 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Market Overview Section */}
-        <MarketOverview />
-
-
-        {/* Active Positions - Full Width */}
-        <section className="bg-card/30 rounded-lg p-1 border border-border/50">
-          <PositionsTable />
+        {/* Market Intelligence Section */}
+        <section>
+          <h2 className="text-2xl font-bold text-foreground mb-4">{t('marketIntelligence.title')}</h2>
+          <MarketStatsHero markets={markets} isLoading={tickerLoading} />
         </section>
+
+
 
       </main>
     </div>
