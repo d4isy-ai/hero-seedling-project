@@ -41,8 +41,8 @@ interface EquityPoint {
 // Top traded coins for the simulation
 const SYMBOLS = ["BTC", "ETH", "BNB", "SOL", "XRP", "ADA", "DOGE", "MATIC", "DOT", "LINK"];
 const STARTING_BALANCE = 1000;
-const MIN_TRADE_SIZE = 10;
-const MAX_TRADE_SIZE = 20;
+const MIN_TRADE_SIZE = 50;
+const MAX_TRADE_SIZE = 100;
 const MAX_POSITIONS = 3;
 const TP_PERCENT = 1.2;
 const SL_PERCENT = 0.8;
@@ -340,13 +340,13 @@ export const DaisySimulation = () => {
           let shouldEnter = false;
           let direction: "LONG" | "SHORT" | null = null;
 
-          if (signal.score >= 0.35) {
-            shouldEnter = true;
-            direction = "LONG";
-          } else if (signal.score <= -0.35) {
-            shouldEnter = true;
-            direction = "SHORT";
-          }
+if (signal.score >= 0.3) {
+  shouldEnter = true;
+  direction = "LONG";
+} else if (signal.score <= -0.3) {
+  shouldEnter = true;
+  direction = "SHORT";
+}
 
           if (shouldEnter && direction) {
             const sizeUSD = MIN_TRADE_SIZE + Math.random() * (MAX_TRADE_SIZE - MIN_TRADE_SIZE);
