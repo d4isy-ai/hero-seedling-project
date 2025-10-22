@@ -1,0 +1,58 @@
+{
+  "header": {
+    "title": "DAISY",
+    "subtitle": "自主氛围交易者"
+  },
+  "hero": {
+    "title": "自主杠杆交易AI代理",
+    "subtitle": "由Aster API提供支持。"
+  },
+  "marketIntelligence": {
+    "title": "市场情报",
+    "totalVolume": "总交易量（24小时）",
+    "gainers": "涨幅榜",
+    "losers": "跌幅榜"
+  },
+  "daisySignals": {
+    "title": "Daisy信号与理由",
+    "balance": "余额",
+    "realizedPnL": "已实现盈亏",
+    "unrealizedPnL": "未实现盈亏",
+    "equity": "权益",
+    "openTrades": "持仓交易",
+    "closedTrades": "已平仓交易",
+    "signalsTab": "信号与理由",
+    "tradesTab": "实时交易",
+    "signal": "信号",
+    "entry": "入场价",
+    "currentPrice": "当前价格",
+    "pnl": "盈亏",
+    "direction": "方向",
+    "long": "做多",
+    "short": "做空"
+  },
+  "marketPulse": {
+    "title": "市场脉搏",
+    "volume": "交易量",
+    "change": "24小时涨跌",
+    "high": "24小时最高",
+    "low": "24小时最低"
+  },
+  "positions": {
+    "title": "活跃仓位"
+  },
+  "aiStrategy": {
+    "title": "AI策略引擎"
+  },
+  "liveTrading": {
+    "title": "实时交易"
+  },
+  "orderBook": {
+    "title": "订单簿",
+    "bids": "买单",
+    "asks": "卖单",
+    "price": "价格",
+    "amount": "数量",
+    "total": "总计"
+  }
+}

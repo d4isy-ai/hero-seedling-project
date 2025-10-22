@@ -1,0 +1,58 @@
+{
+  "header": {
+    "title": "DAISY",
+    "subtitle": "Autonomous Vibe Trader"
+  },
+  "hero": {
+    "title": "Autonomous leverage trading AI agent",
+    "subtitle": "Powered by the Aster API."
+  },
+  "marketIntelligence": {
+    "title": "Market Intelligence",
+    "totalVolume": "Total Volume (24h)",
+    "gainers": "Top Gainers",
+    "losers": "Top Losers"
+  },
+  "daisySignals": {
+    "title": "Daisy Signals & Rationale",
+    "balance": "Balance",
+    "realizedPnL": "Realized PnL",
+    "unrealizedPnL": "Unrealized PnL",
+    "equity": "Equity",
+    "openTrades": "Open Trades",
+    "closedTrades": "Closed Trades",
+    "signalsTab": "Signals & Rationale",
+    "tradesTab": "Live Trades",
+    "signal": "Signal",
+    "entry": "Entry",
+    "currentPrice": "Current Price",
+    "pnl": "PnL",
+    "direction": "Direction",
+    "long": "LONG",
+    "short": "SHORT"
+  },
+  "marketPulse": {
+    "title": "Market Pulse",
+    "volume": "Volume",
+    "change": "24h Change",
+    "high": "24h High",
+    "low": "24h Low"
+  },
+  "positions": {
+    "title": "Active Positions"
+  },
+  "aiStrategy": {
+    "title": "AI Strategy Engine"
+  },
+  "liveTrading": {
+    "title": "Live Trading"
+  },
+  "orderBook": {
+    "title": "Order Book",
+    "bids": "Bids",
+    "asks": "Asks",
+    "price": "Price",
+    "amount": "Amount",
+    "total": "Total"
+  }
+}

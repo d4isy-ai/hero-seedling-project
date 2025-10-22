@@ -10,8 +10,10 @@ import { MarketOverview } from "@/components/MarketOverview";
 import { DaisySimulation } from "@/components/DaisySimulation";
 import { useMarketTicker, useOrderBook } from "@/hooks/useMarketData";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Index = () => {
+  const { t } = useTranslation();
   const { data: tickerData, isLoading: tickerLoading } = useMarketTicker();
   const [selectedSymbols] = useState(['ASTERUSDT', 'BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'SOLUSDT', 'XRPUSDT', 'DOGEUSDT', 'ADAUSDT']);
   
@@ -66,16 +68,16 @@ const Index = () => {
         {/* Hero Section with Gradient */}
         <div className="bg-gradient-daisy rounded-xl p-6 text-center shadow-glow-primary">
           <h2 className="text-3xl font-bold text-primary-foreground mb-2">
-            Autonomous leverage trading AI agent
+            {t('hero.title')}
           </h2>
           <p className="text-primary-foreground/80">
-            Powered by the Aster API.
+            {t('hero.subtitle')}
           </p>
         </div>
 
         {/* Market Stats Hero */}
         <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">Market Intelligence</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-4">{t('marketIntelligence.title')}</h2>
           <MarketStatsHero markets={markets} isLoading={tickerLoading} />
         </section>
 
@@ -91,7 +93,7 @@ const Index = () => {
 
         {/* Live Market Overview - Responsive Grid */}
         <section>
-          <h2 className="text-xl font-bold text-foreground mb-4">Market Pulse</h2>
+          <h2 className="text-xl font-bold text-foreground mb-4">{t('marketPulse.title')}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {tickerLoading ? (
               selectedSymbols.map((symbol) => (
