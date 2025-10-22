@@ -407,10 +407,7 @@ export const DaisySimulation = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold mb-2">Daisy — Signal-Driven Simulation</h2>
-        <p className="text-sm text-muted-foreground">
-          $1,000 starting balance • Theoretical trades only • Live signals from Coinglass
-        </p>
+        <h2 className="text-2xl font-bold mb-2">Daisy Signals</h2>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
