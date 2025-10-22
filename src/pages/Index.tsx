@@ -3,6 +3,7 @@ import { MarketCard } from "@/components/MarketCard";
 import { OrderBook } from "@/components/OrderBook";
 import { PositionsTable } from "@/components/PositionsTable";
 import { AIStrategyEngine } from "@/components/AIStrategyEngine";
+import { LiveTrading } from "@/components/LiveTrading";
 import { useMarketTicker, useOrderBook } from "@/hooks/useMarketData";
 import { useEffect, useState } from "react";
 
@@ -80,6 +81,12 @@ const Index = () => {
               ))
             )}
           </div>
+        </section>
+
+        {/* Live Trading */}
+        <section>
+          <h2 className="text-xl font-bold text-foreground mb-4">Live Trading</h2>
+          <LiveTrading />
         </section>
 
         {/* Order Books */}
