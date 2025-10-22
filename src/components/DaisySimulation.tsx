@@ -38,6 +38,8 @@ interface EquityPoint {
   equity: number;
 }
 
+// Top traded coins for the simulation
+const SYMBOLS = ["BTC", "ETH", "BNB", "SOL", "XRP", "ADA", "DOGE", "MATIC", "DOT", "LINK"];
 const STARTING_BALANCE = 1000;
 const MIN_TRADE_SIZE = 10;
 const MAX_TRADE_SIZE = 20;
@@ -47,7 +49,6 @@ const SL_PERCENT = 0.8;
 const TIME_EXIT_MS = 6 * 60 * 1000; // 6 minutes
 
 export const DaisySimulation = () => {
-  const [symbols, setSymbols] = useState<string[]>(["BTC", "ETH", "BNB", "SOL"]);
   const [signals, setSignals] = useState<Signal[]>([]);
   const [openTrades, setOpenTrades] = useState<Trade[]>([]);
   const [closedTrades, setClosedTrades] = useState<Trade[]>([]);
@@ -56,35 +57,59 @@ export const DaisySimulation = () => {
     { timestamp: Date.now(), equity: STARTING_BALANCE }
   ]);
 
-  // Fetch available coins from CoinGlass
-  const { data: availableCoins } = useCoinGlassData("", "availableCoins");
-
-  // Update symbols when available coins are fetched
-  useEffect(() => {
-    if (availableCoins?.data?.symbols && Array.isArray(availableCoins.data.symbols)) {
-      // Filter to top traded coins and limit to 10 for performance
-      const topCoins = availableCoins.data.symbols
-        .filter((s: string) => ["BTC", "ETH", "BNB", "SOL", "XRP", "ADA", "DOGE", "MATIC", "DOT", "LINK"].includes(s))
-        .slice(0, 10);
-      if (topCoins.length > 0) {
-        setSymbols(topCoins);
-      }
-    }
-  }, [availableCoins]);
-
   // Fetch market data
   const { data: tickerData } = useMarketTicker();
   
-  // Dynamically fetch Coinglass data for all symbols
-  const coinglassData = symbols.reduce((acc, symbol) => {
-    acc[symbol] = {
-      oi: useCoinGlassData(symbol, "openInterest"),
-      funding: useCoinGlassData(symbol, "fundingRate"),
-      ls: useCoinGlassData(symbol, "longShortRatio"),
-      liq: useCoinGlassData(symbol, "liquidation"),
-    };
-    return acc;
-  }, {} as Record<string, any>);
+  // Fetch Coinglass data for each symbol - must be at top level
+  const btcOI = useCoinGlassData("BTC", "openInterest");
+  const btcFunding = useCoinGlassData("BTC", "fundingRate");
+  const btcLS = useCoinGlassData("BTC", "longShortRatio");
+  const btcLiq = useCoinGlassData("BTC", "liquidation");
+
+  const ethOI = useCoinGlassData("ETH", "openInterest");
+  const ethFunding = useCoinGlassData("ETH", "fundingRate");
+  const ethLS = useCoinGlassData("ETH", "longShortRatio");
+  const ethLiq = useCoinGlassData("ETH", "liquidation");
+
+  const bnbOI = useCoinGlassData("BNB", "openInterest");
+  const bnbFunding = useCoinGlassData("BNB", "fundingRate");
+  const bnbLS = useCoinGlassData("BNB", "longShortRatio");
+  const bnbLiq = useCoinGlassData("BNB", "liquidation");
+
+  const solOI = useCoinGlassData("SOL", "openInterest");
+  const solFunding = useCoinGlassData("SOL", "fundingRate");
+  const solLS = useCoinGlassData("SOL", "longShortRatio");
+  const solLiq = useCoinGlassData("SOL", "liquidation");
+
+  const xrpOI = useCoinGlassData("XRP", "openInterest");
+  const xrpFunding = useCoinGlassData("XRP", "fundingRate");
+  const xrpLS = useCoinGlassData("XRP", "longShortRatio");
+  const xrpLiq = useCoinGlassData("XRP", "liquidation");
+
+  const adaOI = useCoinGlassData("ADA", "openInterest");
+  const adaFunding = useCoinGlassData("ADA", "fundingRate");
+  const adaLS = useCoinGlassData("ADA", "longShortRatio");
+  const adaLiq = useCoinGlassData("ADA", "liquidation");
+
+  const dogeOI = useCoinGlassData("DOGE", "openInterest");
+  const dogeFunding = useCoinGlassData("DOGE", "fundingRate");
+  const dogeLS = useCoinGlassData("DOGE", "longShortRatio");
+  const dogeLiq = useCoinGlassData("DOGE", "liquidation");
+
+  const maticOI = useCoinGlassData("MATIC", "openInterest");
+  const maticFunding = useCoinGlassData("MATIC", "fundingRate");
+  const maticLS = useCoinGlassData("MATIC", "longShortRatio");
+  const maticLiq = useCoinGlassData("MATIC", "liquidation");
+
+  const dotOI = useCoinGlassData("DOT", "openInterest");
+  const dotFunding = useCoinGlassData("DOT", "fundingRate");
+  const dotLS = useCoinGlassData("DOT", "longShortRatio");
+  const dotLiq = useCoinGlassData("DOT", "liquidation");
+
+  const linkOI = useCoinGlassData("LINK", "openInterest");
+  const linkFunding = useCoinGlassData("LINK", "fundingRate");
+  const linkLS = useCoinGlassData("LINK", "longShortRatio");
+  const linkLiq = useCoinGlassData("LINK", "liquidation");
 
   // Calculate composite signal
   const calculateSignal = (
@@ -182,8 +207,21 @@ export const DaisySimulation = () => {
     const updateSignals = () => {
       const newSignals: Signal[] = [];
 
-      symbols.forEach(symbol => {
-        const data = coinglassData[symbol];
+      const symbolDataMap = {
+        BTC: { oi: btcOI, funding: btcFunding, ls: btcLS, liq: btcLiq },
+        ETH: { oi: ethOI, funding: ethFunding, ls: ethLS, liq: ethLiq },
+        BNB: { oi: bnbOI, funding: bnbFunding, ls: bnbLS, liq: bnbLiq },
+        SOL: { oi: solOI, funding: solFunding, ls: solLS, liq: solLiq },
+        XRP: { oi: xrpOI, funding: xrpFunding, ls: xrpLS, liq: xrpLiq },
+        ADA: { oi: adaOI, funding: adaFunding, ls: adaLS, liq: adaLiq },
+        DOGE: { oi: dogeOI, funding: dogeFunding, ls: dogeLS, liq: dogeLiq },
+        MATIC: { oi: maticOI, funding: maticFunding, ls: maticLS, liq: maticLiq },
+        DOT: { oi: dotOI, funding: dotFunding, ls: dotLS, liq: dotLiq },
+        LINK: { oi: linkOI, funding: linkFunding, ls: linkLS, liq: linkLiq },
+      };
+
+      SYMBOLS.forEach(symbol => {
+        const data = symbolDataMap[symbol as keyof typeof symbolDataMap];
         if (data?.funding.data && data?.oi.data && data?.ls.data && data?.liq.data) {
           newSignals.push(calculateSignal(
             symbol,
@@ -204,7 +242,7 @@ export const DaisySimulation = () => {
     updateSignals();
     const interval = setInterval(updateSignals, 30000);
     return () => clearInterval(interval);
-  }, [symbols, JSON.stringify(coinglassData)]);
+  }, [btcFunding.data, btcOI.data, btcLS.data, btcLiq.data, ethFunding.data, ethOI.data, ethLS.data, ethLiq.data, bnbFunding.data, bnbOI.data, bnbLS.data, bnbLiq.data, solFunding.data, solOI.data, solLS.data, solLiq.data, xrpFunding.data, xrpOI.data, xrpLS.data, xrpLiq.data, adaFunding.data, adaOI.data, adaLS.data, adaLiq.data, dogeFunding.data, dogeOI.data, dogeLS.data, dogeLiq.data, maticFunding.data, maticOI.data, maticLS.data, maticLiq.data, dotFunding.data, dotOI.data, dotLS.data, dotLiq.data, linkFunding.data, linkOI.data, linkLS.data, linkLiq.data]);
 
   // Get current price for symbol
   const getPrice = (symbol: string): number | null => {
