@@ -1,5 +1,6 @@
 import { TrendingUp, DollarSign, Activity, BarChart3 } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useTranslation } from "react-i18next";
 
 interface MarketStatsHeroProps {
   markets: any[];
@@ -7,6 +8,8 @@ interface MarketStatsHeroProps {
 }
 
 export const MarketStatsHero = ({ markets, isLoading }: MarketStatsHeroProps) => {
+  const { t } = useTranslation();
+  
   // Calculate aggregate stats from market data
   const totalVolume = markets.reduce((sum, m) => sum + (parseFloat(m.change) || 0), 0);
   const avgChange = markets.length > 0 ? totalVolume / markets.length : 0;
@@ -16,23 +19,23 @@ export const MarketStatsHero = ({ markets, isLoading }: MarketStatsHeroProps) =>
 
   const stats = [
     {
-      label: "Market Sentiment",
-      value: avgChange >= 0 ? "Bullish" : "Bearish",
+      label: t('marketStats.marketSentiment'),
+      value: avgChange >= 0 ? t('marketStats.bullish') : t('marketStats.bearish'),
       subValue: `${avgChange >= 0 ? '+' : ''}${avgChange.toFixed(2)}%`,
       icon: TrendingUp,
       gradient: "from-success/20 to-success/5",
       iconColor: avgChange >= 0 ? "text-success" : "text-destructive"
     },
     {
-      label: "Active Markets",
+      label: t('marketStats.activeMarkets'),
       value: activeMarkets.toString(),
-      subValue: `${gainers} gainers, ${losers} losers`,
+      subValue: `${gainers} ${t('marketStats.gainers')}, ${losers} ${t('marketStats.losers')}`,
       icon: Activity,
       gradient: "from-primary/20 to-primary/5",
       iconColor: "text-primary"
     },
     {
-      label: "Top Performer",
+      label: t('marketStats.topPerformer'),
       value: markets.length > 0 
         ? markets.reduce((max, m) => m.change > max.change ? m : max, markets[0])?.symbol.replace('USDT', '') || 'N/A'
         : 'N/A',
@@ -44,9 +47,9 @@ export const MarketStatsHero = ({ markets, isLoading }: MarketStatsHeroProps) =>
       iconColor: "text-accent"
     },
     {
-      label: "Market Coverage",
+      label: t('marketStats.marketCoverage'),
       value: "8",
-      subValue: "Major crypto pairs",
+      subValue: t('marketStats.majorPairs'),
       icon: DollarSign,
       gradient: "from-secondary/20 to-secondary/5",
       iconColor: "text-secondary-foreground"

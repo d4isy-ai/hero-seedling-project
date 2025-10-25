@@ -1,4 +1,4 @@
-project_id = "uxhtwesiqmjumddmwbfi"
+project_id = "bqzyjigjcgmlttkgdwpm"
 
-[functions.update-live-trading]
+[functions.update-trading-state]
 verify_jwt = false

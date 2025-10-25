@@ -37,7 +37,8 @@
     "footer": "AI驱动 • 实时市场数据"
   },
   "daisySignals": {
-    "title": "D4ISY信号与理由",
+    "title": "D4ISY信号",
+    "signalsRationale": "信号与理由",
     "balance": "余额",
     "realizedPnL": "已实现盈亏",
     "unrealizedPnL": "未实现盈亏",
@@ -52,7 +53,13 @@
     "pnl": "盈亏",
     "direction": "方向",
     "long": "做多",
-    "short": "做空"
+    "short": "做空",
+    "loadingSignals": "加载信号中...",
+    "whyNow": "为什么现在：",
+    "funding": "资金费率",
+    "oiChange": "持仓量变化",
+    "lsRatio": "多空比",
+    "liquidation24h": "24小时清算"
   },
   "marketPulse": {
     "title": "市场脉搏",
@@ -65,10 +72,72 @@
     "title": "活跃仓位"
   },
   "aiStrategy": {
-    "title": "AI策略引擎"
+    "title": "AI策略引擎",
+    "confidence": "置信度",
+    "strategy": "策略",
+    "rsi": "RSI",
+    "sma20": "SMA 20",
+    "sma50": "SMA 50",
+    "volume": "成交量",
+    "bullish": "看涨",
+    "bearish": "看跌"
   },
   "liveTrading": {
-    "title": "实时交易"
+    "title": "实时交易",
+    "currentEquity": "当前权益",
+    "startingBalance": "起始余额",
+    "openPositions": "持仓数量",
+    "totalTrades": "总交易数",
+    "performanceChart": "业绩图表",
+    "portfolioValue": "投资组合价值变化",
+    "tradeHistory": "交易历史",
+    "liveExecutionLog": "实时执行日志",
+    "timeUtc": "时间（UTC）",
+    "asset": "资产",
+    "direction": "方向",
+    "entry": "入场",
+    "exit": "出场",
+    "pnl": "盈亏",
+    "status": "状态",
+    "activeTradesMonitored": "正在监控的活跃交易",
+    "closed": "已平仓",
+    "open": "持仓"
+  },
+  "liveTradingDashboard": {
+    "title": "D4ISY实时交易",
+    "subtitle": "真实杠杆交易 • 多币种轮换",
+    "liveBalance": "实时余额",
+    "pnlToday": "今日盈亏",
+    "openPositions": "持仓数量",
+    "activeNow": "当前活跃",
+    "starting": "起始",
+    "ordersFeed": "订单流（仅事件）",
+    "closedTrades": "已平仓交易（已实现盈亏）",
+    "timeUtc": "时间（UTC）",
+    "pair": "交易对",
+    "action": "操作",
+    "side": "方向",
+    "size": "规模",
+    "leverage": "杠杆",
+    "status": "状态",
+    "closeTime": "平仓时间（UTC）",
+    "realizedPnl": "已实现盈亏",
+    "roe": "投资回报率",
+    "closeReason": "平仓原因",
+    "holdTime": "持有时间",
+    "fees": "手续费",
+    "loadingData": "加载实时交易数据中..."
+  },
+  "marketStats": {
+    "marketSentiment": "市场情绪",
+    "bullish": "看涨",
+    "bearish": "看跌",
+    "activeMarkets": "活跃市场",
+    "gainers": "上涨",
+    "losers": "下跌",
+    "topPerformer": "表现最佳",
+    "marketCoverage": "市场覆盖",
+    "majorPairs": "主要加密货币对"
   },
   "orderBook": {
     "title": "订单簿",
@@ -76,7 +145,8 @@
     "asks": "卖单",
     "price": "价格",
     "amount": "数量",
-    "total": "总计"
+    "total": "总计",
+    "spread": "价差"
   },
   "charts": {
     "title": "关键指标图表",

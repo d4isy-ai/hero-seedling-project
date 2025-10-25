@@ -14,7 +14,180 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      closed_trades: {
+        Row: {
+          close_reason: string
+          close_time: string
+          created_at: string
+          fees: number
+          hold_time: string
+          id: string
+          leverage: number
+          pair: string
+          realized_pnl: number
+          realized_pnl_percent: number
+          side: string
+          size: number
+        }
+        Insert: {
+          close_reason: string
+          close_time?: string
+          created_at?: string
+          fees?: number
+          hold_time: string
+          id?: string
+          leverage: number
+          pair: string
+          realized_pnl: number
+          realized_pnl_percent: number
+          side: string
+          size: number
+        }
+        Update: {
+          close_reason?: string
+          close_time?: string
+          created_at?: string
+          fees?: number
+          hold_time?: string
+          id?: string
+          leverage?: number
+          pair?: string
+          realized_pnl?: number
+          realized_pnl_percent?: number
+          side?: string
+          size?: number
+        }
+        Relationships: []
+      }
+      equity_history: {
+        Row: {
+          balance: number
+          created_at: string | null
+          id: string
+          timestamp: string | null
+        }
+        Insert: {
+          balance: number
+          created_at?: string | null
+          id?: string
+          timestamp?: string | null
+        }
+        Update: {
+          balance?: number
+          created_at?: string | null
+          id?: string
+          timestamp?: string | null
+        }
+        Relationships: []
+      }
+      open_positions: {
+        Row: {
+          created_at: string
+          current_price: number
+          entry_price: number
+          entry_time: string
+          id: string
+          leverage: number
+          pair: string
+          risk_level: string
+          side: string
+          size: number
+          sl_enabled: boolean
+          tp_enabled: boolean
+          unrealized_pnl: number
+          unrealized_pnl_percent: number
+        }
+        Insert: {
+          created_at?: string
+          current_price?: number
+          entry_price: number
+          entry_time?: string
+          id?: string
+          leverage: number
+          pair: string
+          risk_level?: string
+          side: string
+          size: number
+          sl_enabled?: boolean
+          tp_enabled?: boolean
+          unrealized_pnl?: number
+          unrealized_pnl_percent?: number
+        }
+        Update: {
+          created_at?: string
+          current_price?: number
+          entry_price?: number
+          entry_time?: string
+          id?: string
+          leverage?: number
+          pair?: string
+          risk_level?: string
+          side?: string
+          size?: number
+          sl_enabled?: boolean
+          tp_enabled?: boolean
+          unrealized_pnl?: number
+          unrealized_pnl_percent?: number
+        }
+        Relationships: []
+      }
+      orders: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          leverage: number
+          pair: string
+          side: string
+          size: number
+          status: string
+          timestamp: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          leverage: number
+          pair: string
+          side: string
+          size: number
+          status?: string
+          timestamp?: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          leverage?: number
+          pair?: string
+          side?: string
+          size?: number
+          status?: string
+          timestamp?: string
+        }
+        Relationships: []
+      }
+      trading_state: {
+        Row: {
+          current_balance: number
+          id: number
+          last_updated: string | null
+          starting_balance: number
+        }
+        Insert: {
+          current_balance?: number
+          id?: number
+          last_updated?: string | null
+          starting_balance?: number
+        }
+        Update: {
+          current_balance?: number
+          id?: number
+          last_updated?: string | null
+          starting_balance?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { useCoinGlassData } from "@/hooks/useCoinGlassData";
 import { useMarketTicker } from "@/hooks/useMarketData";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { useTranslation } from "react-i18next";
 
 interface Signal {
   symbol: string;
@@ -49,6 +50,7 @@ const SL_PERCENT = 2; // 2% stop loss
 const TIME_EXIT_MS = 4 * 60 * 1000; // 4 minutes
 
 export const DaisySimulation = () => {
+  const { t } = useTranslation();
   const [signals, setSignals] = useState<Signal[]>([]);
   const [openTrades, setOpenTrades] = useState<Trade[]>([]);
   const [closedTrades, setClosedTrades] = useState<Trade[]>([]);
@@ -407,18 +409,18 @@ export const DaisySimulation = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold mb-2">D4ISY Signals</h2>
+        <h2 className="text-2xl font-bold mb-2">{t('daisySignals.title')}</h2>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Left Panel - Signals */}
+      <div className="grid grid-cols-1 gap-6">
+        {/* Signals Panel */}
         <Card>
           <CardHeader>
-            <CardTitle>Signals & Rationale</CardTitle>
+            <CardTitle>{t('daisySignals.signalsRationale')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 max-h-[400px] overflow-y-auto">
             {signals.length === 0 ? (
-              <p className="text-muted-foreground text-sm">Loading signals...</p>
+              <p className="text-muted-foreground text-sm">{t('daisySignals.loadingSignals')}</p>
             ) : (
               signals.map(signal => (
                 <div key={signal.symbol} className="border rounded-lg p-4 space-y-2">
@@ -431,81 +433,25 @@ export const DaisySimulation = () => {
                   
                   <div className="grid grid-cols-2 gap-2 text-sm">
                     <div>
-                      <span className="text-muted-foreground">Funding:</span> {(signal.funding * 100).toFixed(3)}%
+                      <span className="text-muted-foreground">{t('daisySignals.funding')}:</span> {(signal.funding * 100).toFixed(3)}%
                     </div>
                     <div>
-                      <span className="text-muted-foreground">ΔOI:</span> {signal.oiChange.toFixed(2)}%
+                      <span className="text-muted-foreground">{t('daisySignals.oiChange')}:</span> {signal.oiChange.toFixed(2)}%
                     </div>
                     <div>
-                      <span className="text-muted-foreground">L/S Ratio:</span> {signal.longShortRatio.toFixed(2)}
+                      <span className="text-muted-foreground">{t('daisySignals.lsRatio')}:</span> {signal.longShortRatio.toFixed(2)}
                     </div>
                     <div>
-                      <span className="text-muted-foreground">Liq 24h:</span> ${(signal.liquidation / 1000000).toFixed(1)}M
+                      <span className="text-muted-foreground">{t('daisySignals.liquidation24h')}:</span> ${(signal.liquidation / 1000000).toFixed(1)}M
                     </div>
                   </div>
 
                   <div className="text-sm bg-muted p-2 rounded">
-                    <span className="font-semibold">Why now:</span> {signal.rationale}
+                    <span className="font-semibold">{t('daisySignals.whyNow')}</span> {signal.rationale}
                   </div>
                 </div>
               ))
             )}
-          </CardContent>
-        </Card>
-
-        {/* Right Panel - Trades */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Live Trades (Simulation)</CardTitle>
-            <div className="grid grid-cols-3 gap-4 mt-2 text-sm">
-              <div>
-                <p className="text-muted-foreground">Equity</p>
-                <p className="font-bold text-lg">${currentEquity.toFixed(2)}</p>
-              </div>
-              <div>
-                <p className="text-muted-foreground">Realized PnL</p>
-                <p className={`font-bold ${realizedPnL >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                  ${realizedPnL.toFixed(2)}
-                </p>
-              </div>
-              <div>
-                <p className="text-muted-foreground">Unrealized PnL</p>
-                <p className={`font-bold ${unrealizedPnL >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                  ${unrealizedPnL.toFixed(2)}
-                </p>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-
-            {/* Open Trades */}
-            <div>
-              <h3 className="font-semibold mb-2">Open Positions ({openTrades.length}/{MAX_POSITIONS})</h3>
-              {openTrades.length === 0 ? (
-                <p className="text-sm text-muted-foreground">No open positions</p>
-              ) : (
-                <div className="space-y-2 max-h-48 overflow-y-auto">
-                  {openTrades.map(trade => (
-                    <div key={trade.id} className="border rounded p-2 text-sm">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="font-semibold">{trade.symbol}USDT</span>
-                        <Badge variant={trade.direction === "LONG" ? "default" : "destructive"} className="text-xs">
-                          {trade.direction}
-                        </Badge>
-                      </div>
-                      <div className="grid grid-cols-3 gap-1 text-xs text-muted-foreground">
-                        <div>Entry: ${trade.entryPrice.toFixed(2)}</div>
-                        <div>Last: ${trade.lastPrice.toFixed(2)}</div>
-                        <div>Size: ${trade.sizeUSD.toFixed(2)}</div>
-                      </div>
-                      <div className={`text-xs font-semibold mt-1 ${trade.pnlUSD >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                        PnL: ${trade.pnlUSD.toFixed(2)} ({trade.pnlPercent.toFixed(2)}%)
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
           </CardContent>
         </Card>
       </div>

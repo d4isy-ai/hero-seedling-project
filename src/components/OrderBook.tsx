@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTranslation } from "react-i18next";
 
 interface Order {
   price: string;
@@ -15,6 +16,8 @@ interface OrderBookProps {
 }
 
 export const OrderBook = ({ symbol, bids, asks, isLoading }: OrderBookProps) => {
+  const { t } = useTranslation();
+  
   if (isLoading) {
     return (
       <Card className="p-4 bg-card border-border">
@@ -31,9 +34,9 @@ export const OrderBook = ({ symbol, bids, asks, isLoading }: OrderBookProps) => 
       </div>
       
       <div className="grid grid-cols-3 text-xs text-muted-foreground mb-2 px-2">
-        <span>Price</span>
-        <span className="text-right">Amount</span>
-        <span className="text-right">Total</span>
+        <span>{t('orderBook.price')}</span>
+        <span className="text-right">{t('orderBook.amount')}</span>
+        <span className="text-right">{t('orderBook.total')}</span>
       </div>
       
       <div className="space-y-1 mb-4">
@@ -49,7 +52,7 @@ export const OrderBook = ({ symbol, bids, asks, isLoading }: OrderBookProps) => 
       
       <div className="border-t border-border my-2 pt-2">
         <div className="text-center text-sm font-bold text-foreground mb-2">
-          Spread: 0.01
+          {t('orderBook.spread')}: 0.01
         </div>
       </div>
       

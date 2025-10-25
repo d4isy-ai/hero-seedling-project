@@ -37,7 +37,8 @@
     "footer": "AI-powered • Real-time market data"
   },
   "daisySignals": {
-    "title": "D4ISY Signals & Rationale",
+    "title": "D4ISY Signals",
+    "signalsRationale": "Signals & Rationale",
     "balance": "Balance",
     "realizedPnL": "Realized PnL",
     "unrealizedPnL": "Unrealized PnL",
@@ -52,7 +53,13 @@
     "pnl": "PnL",
     "direction": "Direction",
     "long": "LONG",
-    "short": "SHORT"
+    "short": "SHORT",
+    "loadingSignals": "Loading signals...",
+    "whyNow": "Why now:",
+    "funding": "Funding",
+    "oiChange": "ΔOI",
+    "lsRatio": "L/S Ratio",
+    "liquidation24h": "Liq 24h"
   },
   "marketPulse": {
     "title": "Market Pulse",
@@ -65,10 +72,72 @@
     "title": "Active Positions"
   },
   "aiStrategy": {
-    "title": "AI Strategy Engine"
+    "title": "AI Strategy Engine",
+    "confidence": "confidence",
+    "strategy": "Strategy",
+    "rsi": "RSI",
+    "sma20": "SMA 20",
+    "sma50": "SMA 50",
+    "volume": "Volume",
+    "bullish": "BULLISH",
+    "bearish": "BEARISH"
   },
   "liveTrading": {
-    "title": "Live Trading"
+    "title": "Live Trading",
+    "currentEquity": "Current Equity",
+    "startingBalance": "Starting Balance",
+    "openPositions": "Open Positions",
+    "totalTrades": "Total Trades",
+    "performanceChart": "Performance Chart",
+    "portfolioValue": "Portfolio value over time",
+    "tradeHistory": "Trade History",
+    "liveExecutionLog": "Live execution log",
+    "timeUtc": "Time (UTC)",
+    "asset": "Asset",
+    "direction": "Direction",
+    "entry": "Entry",
+    "exit": "Exit",
+    "pnl": "PnL",
+    "status": "Status",
+    "activeTradesMonitored": "Active trades being monitored",
+    "closed": "closed",
+    "open": "open"
+  },
+  "liveTradingDashboard": {
+    "title": "D4ISY TRADES LIVE",
+    "subtitle": "Realistic Leverage Trading • Multi-Pair Rotation",
+    "liveBalance": "Live Balance",
+    "pnlToday": "PnL Today",
+    "openPositions": "Open Positions",
+    "activeNow": "Active now",
+    "starting": "Starting",
+    "ordersFeed": "Orders Feed (Events Only)",
+    "closedTrades": "Closed Trades (Realized PnL)",
+    "timeUtc": "Time (UTC)",
+    "pair": "Pair",
+    "action": "Action",
+    "side": "Side",
+    "size": "Size",
+    "leverage": "Leverage",
+    "status": "Status",
+    "closeTime": "Close Time (UTC)",
+    "realizedPnl": "Realized PnL",
+    "roe": "ROE",
+    "closeReason": "Close Reason",
+    "holdTime": "Hold Time",
+    "fees": "Fees",
+    "loadingData": "Loading live trading data..."
+  },
+  "marketStats": {
+    "marketSentiment": "Market Sentiment",
+    "bullish": "Bullish",
+    "bearish": "Bearish",
+    "activeMarkets": "Active Markets",
+    "gainers": "gainers",
+    "losers": "losers",
+    "topPerformer": "Top Performer",
+    "marketCoverage": "Market Coverage",
+    "majorPairs": "Major crypto pairs"
   },
   "orderBook": {
     "title": "Order Book",
@@ -76,7 +145,8 @@
     "asks": "Asks",
     "price": "Price",
     "amount": "Amount",
-    "total": "Total"
+    "total": "Total",
+    "spread": "Spread"
   },
   "charts": {
     "title": "Key Indicator Charts",

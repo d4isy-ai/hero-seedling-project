@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown, Info } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface Strategy {
   symbol: string;
@@ -43,11 +44,13 @@ const strategies: Strategy[] = [
 ];
 
 export const AIStrategyEngine = () => {
+  const { t } = useTranslation();
+  
   return (
     <Card className="p-4 bg-card border-border">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <h3 className="font-bold text-foreground">AI Strategy Engine</h3>
+          <h3 className="font-bold text-foreground">{t('aiStrategy.title')}</h3>
           <Info className="w-4 h-4 text-muted-foreground cursor-pointer hover:text-primary transition-colors" />
         </div>
       </div>
@@ -71,11 +74,11 @@ export const AIStrategyEngine = () => {
                       variant={strat.signal === 'BULLISH' ? 'default' : 'destructive'}
                       className={`${strat.signal === 'BULLISH' ? 'bg-success text-success-foreground' : ''} shadow-glow-${strat.signal === 'BULLISH' ? 'success' : 'destructive'}`}
                     >
-                      ↗ {strat.signal}
+                      ↗ {strat.signal === 'BULLISH' ? t('aiStrategy.bullish') : t('aiStrategy.bearish')}
                     </Badge>
-                    <span className="text-sm text-muted-foreground">{strat.confidence}% confidence</span>
+                    <span className="text-sm text-muted-foreground">{strat.confidence}% {t('aiStrategy.confidence')}</span>
                   </div>
-                  <p className="text-sm font-medium text-primary">Strategy: {strat.strategy}</p>
+                  <p className="text-sm font-medium text-primary">{t('aiStrategy.strategy')}: {strat.strategy}</p>
                 </div>
               </div>
               <span className="text-xs text-muted-foreground">{strat.time}</span>
@@ -85,19 +88,19 @@ export const AIStrategyEngine = () => {
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               <div className="bg-background/50 p-2 rounded">
-                <p className="text-xs text-muted-foreground mb-1">RSI</p>
+                <p className="text-xs text-muted-foreground mb-1">{t('aiStrategy.rsi')}</p>
                 <p className="text-sm font-bold text-foreground">{strat.rsi}</p>
               </div>
               <div className="bg-background/50 p-2 rounded">
-                <p className="text-xs text-muted-foreground mb-1">SMA 20</p>
+                <p className="text-xs text-muted-foreground mb-1">{t('aiStrategy.sma20')}</p>
                 <p className="text-sm font-bold text-foreground">{strat.sma20}</p>
               </div>
               <div className="bg-background/50 p-2 rounded">
-                <p className="text-xs text-muted-foreground mb-1">SMA 50</p>
+                <p className="text-xs text-muted-foreground mb-1">{t('aiStrategy.sma50')}</p>
                 <p className="text-sm font-bold text-foreground">{strat.sma50}</p>
               </div>
               <div className="bg-background/50 p-2 rounded">
-                <p className="text-xs text-muted-foreground mb-1">Volume</p>
+                <p className="text-xs text-muted-foreground mb-1">{t('aiStrategy.volume')}</p>
                 <p className="text-sm font-bold text-destructive">{strat.volume}</p>
               </div>
             </div>

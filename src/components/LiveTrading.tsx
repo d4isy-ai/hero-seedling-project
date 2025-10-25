@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { useMarketTicker } from "@/hooks/useMarketData";
 import { useEffect, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { useTranslation } from "react-i18next";
 
 interface Trade {
   id: string;
@@ -26,6 +27,7 @@ const TRADING_SYMBOLS = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT'];
 const MIN_OPEN_TRADES = 3;
 
 export const LiveTrading = () => {
+  const { t } = useTranslation();
   const { data: tickerData } = useMarketTicker();
   const [trades, setTrades] = useState<Trade[]>([]);
   const [portfolioHistory, setPortfolioHistory] = useState<PortfolioPoint[]>([
@@ -161,7 +163,7 @@ export const LiveTrading = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Current Equity</CardDescription>
+            <CardDescription>{t('liveTrading.currentEquity')}</CardDescription>
             <CardTitle className="text-3xl font-bold">
               ${currentEquity.toFixed(2)}
             </CardTitle>
@@ -169,7 +171,7 @@ export const LiveTrading = () => {
           <CardContent>
             <div className="space-y-1">
               <div className="text-xs text-muted-foreground">
-                Starting Balance: ${INITIAL_CAPITAL.toFixed(2)}
+                {t('liveTrading.startingBalance')}: ${INITIAL_CAPITAL.toFixed(2)}
               </div>
               <div className="flex items-center gap-2">
                 <Badge variant={totalPnL >= 0 ? "default" : "destructive"}>
@@ -185,24 +187,24 @@ export const LiveTrading = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Open Positions</CardDescription>
+            <CardDescription>{t('liveTrading.openPositions')}</CardDescription>
             <CardTitle className="text-3xl font-bold">{openPositions.length}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              Active trades being monitored
+              {t('liveTrading.activeTradesMonitored')}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Total Trades</CardDescription>
+            <CardDescription>{t('liveTrading.totalTrades')}</CardDescription>
             <CardTitle className="text-3xl font-bold">{trades.length}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              {closedTrades.length} closed, {openPositions.length} open
+              {closedTrades.length} {t('liveTrading.closed')}, {openPositions.length} {t('liveTrading.open')}
             </p>
           </CardContent>
         </Card>
@@ -210,8 +212,8 @@ export const LiveTrading = () => {
 
       <Card>
         <CardHeader>
-          <CardTitle>Performance Chart</CardTitle>
-          <CardDescription>Portfolio value over time</CardDescription>
+          <CardTitle>{t('liveTrading.performanceChart')}</CardTitle>
+          <CardDescription>{t('liveTrading.portfolioValue')}</CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={200}>
@@ -234,22 +236,22 @@ export const LiveTrading = () => {
 
       <Card>
         <CardHeader>
-          <CardTitle>Trade History</CardTitle>
-          <CardDescription>Live execution log</CardDescription>
+          <CardTitle>{t('liveTrading.tradeHistory')}</CardTitle>
+          <CardDescription>{t('liveTrading.liveExecutionLog')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                   <tr className="border-b text-left text-sm text-muted-foreground">
-                  <th className="pb-2">Time (UTC)</th>
-                  <th className="pb-2">Asset</th>
-                  <th className="pb-2">Direction</th>
-                  <th className="pb-2">Entry</th>
-                  <th className="pb-2">Exit</th>
-                  <th className="pb-2">PnL ($)</th>
-                  <th className="pb-2">PnL (%)</th>
-                  <th className="pb-2">Status</th>
+                  <th className="pb-2">{t('liveTrading.timeUtc')}</th>
+                  <th className="pb-2">{t('liveTrading.asset')}</th>
+                  <th className="pb-2">{t('liveTrading.direction')}</th>
+                  <th className="pb-2">{t('liveTrading.entry')}</th>
+                  <th className="pb-2">{t('liveTrading.exit')}</th>
+                  <th className="pb-2">{t('liveTrading.pnl')} ($)</th>
+                  <th className="pb-2">{t('liveTrading.pnl')} (%)</th>
+                  <th className="pb-2">{t('liveTrading.status')}</th>
                 </tr>
               </thead>
               <tbody className="text-sm">
